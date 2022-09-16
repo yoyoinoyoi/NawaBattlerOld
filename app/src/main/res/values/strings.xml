@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Kotori</string>
     <string name="roll_label">Roll</string>
+    <string name="move">move</string>
+    <string name="welcome">welcome</string>
+    <string name="back">back</string>
 </resources>
