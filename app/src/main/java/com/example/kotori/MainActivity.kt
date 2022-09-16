@@ -16,12 +16,6 @@ class MainActivity : AppCompatActivity() {
 
         val rollButton: Button = findViewById(R.id.roll_button)
         rollButton.setOnClickListener { rollDice() }
-
-        val button = findViewById<Button>(R.id.btnStart) // ① viewを取得
-        button.setOnClickListener { // ② setOnClickListenerを設置し、処理を追加
-            val intent = Intent(applicationContext, BattleActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     private fun rollDice() {
@@ -29,4 +23,11 @@ class MainActivity : AppCompatActivity() {
         val randomInt = (1..6).random()
         resultText.text = randomInt.toString()
     }
+
+    // 実行ボタンタップ時
+    fun onButtonTapped(view: View?){
+        val intent = Intent(this, BattleActivity::class.java)
+        startActivity(intent)
+    }
+
 }

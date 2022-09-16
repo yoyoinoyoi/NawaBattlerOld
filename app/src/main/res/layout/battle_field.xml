@@ -1,32 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".BattleActivity">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="480dp"
+    android:layout_gravity="center_horizontal"
+    android:stretchColumns="1">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/welcome"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <TableRow>
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+    </TableRow>
 
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onGameBack"
-        android:text="@string/back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+    <TableRow>
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+    </TableRow>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TableRow>
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/black"
+            android:text="1" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:text="1" />
+    </TableRow>
+
+<!--    <TableRow>-->
+
+<!--        <TextView-->
+<!--            android:layout_column="1"-->
+<!--            android:padding="3dip"-->
+<!--            android:text="Save..." />-->
+
+<!--        <TextView-->
+<!--            android:gravity="right"-->
+<!--            android:padding="3dip"-->
+<!--            android:text="Ctrl-S" />-->
+<!--    </TableRow>-->
+
+<!--    <TableRow>-->
+
+<!--        <TextView-->
+<!--            android:layout_column="1"-->
+<!--            android:padding="3dip"-->
+<!--            android:text="Save As..." />-->
+
+<!--        <TextView-->
+<!--            android:gravity="right"-->
+<!--            android:padding="3dip"-->
+<!--            android:text="Ctrl-Shift-S" />-->
+<!--    </TableRow>-->
+
+<!--    <View-->
+<!--        android:layout_height="2dip"-->
+<!--        android:background="#FF909090" />-->
+
+<!--    <TableRow>-->
+
+<!--        <TextView-->
+<!--            android:padding="3dip"-->
+<!--            android:text="X" />-->
+
+<!--        <TextView-->
+<!--            android:padding="3dip"-->
+<!--            android:text="Import..." />-->
+<!--    </TableRow>-->
+
+<!--    <TableRow>-->
+
+<!--        <TextView-->
+<!--            android:padding="3dip"-->
+<!--            android:text="X" />-->
+
+<!--        <TextView-->
+<!--            android:padding="3dip"-->
+<!--            android:text="Export..." />-->
+
+<!--        <TextView-->
+<!--            android:gravity="right"-->
+<!--            android:padding="3dip"-->
+<!--            android:text="Ctrl-E" />-->
+<!--    </TableRow>-->
+
+<!--    <View-->
+<!--        android:layout_height="2dip"-->
+<!--        android:background="#FF909090" />-->
+
+<!--    <TableRow>-->
+
+<!--        <TextView-->
+<!--            android:layout_column="1"-->
+<!--            android:padding="3dip"-->
+<!--            android:text="Quit" />-->
+<!--    </TableRow>-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/btnBack"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:onClick="onGameBack"-->
+    <!--        android:text="@string/back"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+</TableLayout>
