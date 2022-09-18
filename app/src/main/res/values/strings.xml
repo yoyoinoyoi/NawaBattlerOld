@@ -4,4 +4,7 @@
     <string name="move">move</string>
     <string name="welcome">welcome</string>
     <string name="back">back</string>
+    <string name="black">black</string>
+    <string name="white">white</string>
+    <string name="string_condition">condition</string>
 </resources>
