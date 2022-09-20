@@ -1,70 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".BattleActivity">
 
     <GridLayout
+        android:id="@+id/gridLayout2"
         android:layout_width="400dp"
         android:layout_height="480dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center_vertical"
         android:columnCount="5"
-        android:rowCount="2"
+        android:rowCount="6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
         <ImageButton
             android:id="@+id/P00"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/blue"/>
+            android:background="@drawable/blue"
+            android:onClick="onClickGrid" />
+
         <ImageButton
             android:id="@+id/P01"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/white"/>
+            android:background="@drawable/white"
+            android:onClick="onClickGrid" />
+
         <ImageButton
             android:id="@+id/P02"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/pink"/>
+            android:background="@drawable/pink"
+            android:onClick="onClickGrid" />
 
         <ImageButton
             android:id="@+id/P03"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/blue"/>
+            android:background="@drawable/blue"
+            android:onClick="onClickGrid" />
+
         <ImageButton
             android:id="@+id/P04"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/white"/>
+            android:background="@drawable/white"
+            android:onClick="onClickGrid" />
+
         <ImageButton
             android:id="@+id/P10"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/pink"/>
+            android:background="@drawable/pink"
+            android:onClick="onClickGrid" />
 
         <ImageButton
             android:id="@+id/P11"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/blue"/>
+            android:background="@drawable/blue"
+            android:onClick="onClickGrid" />
+
         <ImageButton
             android:id="@+id/P12"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/white"/>
+            android:background="@drawable/white"
+            android:onClick="onClickGrid" />
+
         <ImageButton
             android:id="@+id/P13"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/pink"/>
+            android:background="@drawable/pink"
+            android:onClick="onClickGrid" />
+
         <ImageButton
             android:id="@+id/P14"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/pink"/>
+            android:background="@drawable/pink"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P20"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/blue"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P21"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/white"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P22"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/pink"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P23"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/blue"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P24"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/white"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P30"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/pink"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P31"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/blue"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P32"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/white"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P33"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/pink"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P34"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/pink"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P40"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/blue"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P41"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/white"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P42"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/pink"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P43"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/blue"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P44"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/white"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P50"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/pink"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P51"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/blue"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P52"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/white"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P53"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/pink"
+            android:onClick="onClickGrid" />
+
+        <ImageButton
+            android:id="@+id/P54"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/pink"
+            android:onClick="onClickGrid" />
 
     </GridLayout>
 
@@ -73,37 +236,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
         android:text="@string/string_condition"
         android:textSize="35sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="130dp"
-        tools:layout_editor_absoluteY="511dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
+        tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/button3"
+        android:onClick="onClickCard"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:background="@drawable/dandadan"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="595dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="112dp"
+        android:background="@drawable/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
+        tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/button4"
+        android:onClick="onClickCard"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:background="@drawable/dynamite"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="145dp"
-        tools:layout_editor_absoluteY="595dp" />
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="112dp"
+        android:background="@drawable/white"
+        app:layout_constraintStart_toEndOf="@+id/button3"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
+        tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/button5"
+        android:onClick="onClickCard"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:background="@drawable/slime"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="275dp"
-        tools:layout_editor_absoluteY="595dp" />
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="112dp"
+        android:background="@drawable/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/button4"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
