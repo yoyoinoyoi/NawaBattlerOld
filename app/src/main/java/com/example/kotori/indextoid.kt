@@ -71,7 +71,7 @@ fun indextoid (x: Int, y:Int): Int {
         502 -> R.id.P52
         503 -> R.id.P53
         504 -> R.id.P54
-        else -> R.id.button3
+        else -> R.id.cardbutton3
     }
     return  ider
 }

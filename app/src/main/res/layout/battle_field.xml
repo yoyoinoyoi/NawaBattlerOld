@@ -258,7 +258,7 @@
         tools:ignore="MissingConstraints" />
 
     <ImageButton
-        android:id="@+id/button3"
+        android:id="@+id/cardbutton1"
         android:onClick="onClickCard"
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -270,19 +270,19 @@
         tools:ignore="MissingConstraints" />
 
     <ImageButton
-        android:id="@+id/button4"
+        android:id="@+id/cardbutton2"
         android:onClick="onClickCard"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="112dp"
         android:background="@drawable/white"
-        app:layout_constraintStart_toEndOf="@+id/button3"
+        app:layout_constraintStart_toEndOf="@+id/cardbutton1"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
-        android:id="@+id/button5"
+        android:id="@+id/cardbutton3"
         android:onClick="onClickCard"
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -291,7 +291,7 @@
         android:background="@drawable/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/button4"
+        app:layout_constraintStart_toEndOf="@+id/cardbutton2"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
         tools:ignore="MissingConstraints" />
 
