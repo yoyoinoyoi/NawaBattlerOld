@@ -6,7 +6,7 @@ import com.example.kotori.R
 // ImageButton の位置から座標を返す関数
 fun idtoindex(view: View): IntArray{
 
-    var index = when(view.id){
+    val index = when(view.id){
         R.id.P00 -> intArrayOf(0, 0)
         R.id.P01 -> intArrayOf(0, 1)
         R.id.P02 -> intArrayOf(0, 2)
