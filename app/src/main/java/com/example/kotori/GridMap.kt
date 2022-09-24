@@ -36,11 +36,13 @@ class GridMap(initmap: Array<Array<condition>>) {
                     if ((vy < 0) || (vy >= this.gridmap[0].size)){
                         continue
                     }
+                    if (this.gridmap[vx][vy] !== condition.Empty){
+                        continue
+                    }
 
                     // (i, j) がplayer のマスと隣接しているならば候補に追加
-                    if (this.gridmap[i][j] === player){
-                        ret.add(this.id(intArrayOf(i, j)))
-                        break
+                    if (this.gridmap[i][j] == player){
+                        ret.add(this.id(intArrayOf(vx, vy)))
                     }
                 }
             }
@@ -63,36 +65,63 @@ class GridMap(initmap: Array<Array<condition>>) {
 
     // (x, y) の配列をInt 型で返す
     private fun id(coordinate: IntArray): Int{
-        return coordinate.first() + 10000 * coordinate.last()
+        return 10000 * coordinate[0] + coordinate[1]
     }
 
     // 置くことができるかをboolean で返す
     fun canset(Coordinates: IntArray, Range: Array<IntArray>, player: condition): Boolean{
         val candidate = this.limitation(player)
         val rangecoordinate = this.rangetocoordinate(Range)
+
+//        for ((x, y) in rangecoordinate){
+//            println(x.toString() + y.toString())
+//        }
+
+        println("candidate:")
+        for (value in candidate){
+            println(value)
+        }
+        println("-------")
+
         // candidate を少なくとも含んでいるか
         var f1 = false
+
         for ((x, y) in rangecoordinate){
             //
-            val coordid = this.id(intArrayOf(x+Coordinates[0], y+Coordinates[1]))
+            val vx = x + Coordinates[0]
+            val vy = y + Coordinates[1]
+
+            if ((vx < 0) || (vx >= this.gridmap.size)){
+                return false
+            }
+            if ((vy < 0) || (vy >= this.gridmap[0].size)){
+                return false
+            }
+
+            val coordid = this.id(intArrayOf(vx, vy))
+
+            println(coordid)
             // candidate を含んでいるか
             if (coordid in candidate){
                 f1 = true
             }
 
             // 該当マスがすでに埋まっていたら置くことができない
-            if (this.gridmap[x+Coordinates[0]][y+Coordinates[1]] !== condition.Empty){
+            if (this.gridmap[vx][vy] !== condition.Empty){
                 return false
             }
         }
+
         return f1
     }
+
 
     // 実際に置く. 置けない場合にはそのまま変更なし
     fun setcolor(Coordinates: IntArray, Range: Array<IntArray>, player: condition){
         if (canset(Coordinates, Range, player)){
-            for ((x, y) in Range){
-                this.gridmap[x+Coordinates[0]][y+Coordinates[1]]
+            val rangecoordinate = this.rangetocoordinate(Range)
+            for ((x, y) in rangecoordinate){
+                this.gridmap[x+Coordinates[0]][y+Coordinates[1]] = player
             }
         }
     }

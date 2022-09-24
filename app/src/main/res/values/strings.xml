@@ -7,4 +7,5 @@
     <string name="black">black</string>
     <string name="white">white</string>
     <string name="string_condition">condition</string>
+    <string name="gotobattle">Battle!</string>
 </resources>

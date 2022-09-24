@@ -9,18 +9,13 @@ import android.widget.ImageButton
 import android.widget.TextView
 
 class BattleActivity : AppCompatActivity() {
-    data class Card(val Image: Int, val Range: Array<IntArray>)
 
     // グリッド情報
-    var gridmap_base = Array(6){ Array(5){condition.Empty} }
+    var gridmap_base = Array(12){ Array(10){condition.Empty} }
     // グリッドで選択されたマスの座標. (-1, -1) は初期値
     var selectedCoordinate = intArrayOf(-1, -1)
     // プレイヤー1のデッキ
     var player1deck = mutableListOf<Card>()
-    // プレイヤー1のデッキ内で、まだ使われていないカードのid
-    val nousecard1 = mutableListOf<Int>()
-    // プレイヤー2のデッキ
-    var player2deck = arrayOf<Card>()
     // どちらのターンかを識別する
     var nowTurn = condition.Player1
     // 現在グリッドを操作しているか
@@ -31,24 +26,23 @@ class BattleActivity : AppCompatActivity() {
     public var selectedCardId = -1
     // 選択されたカードの効果
     public var selectedCardStatus = Array(5){ intArrayOf(0, 0, 0, 0, 0) }
-    // 選択できるカードの候補
-    public var candidatecard = mutableListOf<Int>()
+
+    // 初期化
+    val gridmap = GridMap(gridmap_base)
+    val deckField1 = DeckField()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.battle_field)
-        val gridmap = GridMap(gridmap_base)
-        // 盤面の状態を初期化
-        updategrid(gridmap.gridmap)
 
+        // デッキのカード情報を入力
         val a1 = intArrayOf(0, 0, 1, 0, 0)
         val b1 = intArrayOf(0, 1, 0, 1, 0)
         val c1 = intArrayOf(1, 0, 0, 0, 1)
         val d1 = intArrayOf(0, 1, 0, 1, 0)
         val e1 = intArrayOf(0, 0, 1, 0, 0)
         val grid1 = arrayOf(a1, b1, c1, d1, e1)
-        player1deck.add(Card(R.drawable.pallagon, grid1))
-        nousecard1.add(0)
+        deckField1.deck.add(Card(R.drawable.pallagon, grid1))
 
         val a2 = intArrayOf(0, 0, 1, 0, 0)
         val b2 = intArrayOf(0, 1, 1, 1, 0)
@@ -56,8 +50,7 @@ class BattleActivity : AppCompatActivity() {
         val d2 = intArrayOf(0, 0, 1, 0, 0)
         val e2 = intArrayOf(0, 0, 1, 0, 0)
         val grid2 = arrayOf(a2, b2, c2, d2, e2)
-        player1deck.add(Card(R.drawable.parasol, grid2))
-        nousecard1.add(1)
+        deckField1.deck.add(Card(R.drawable.parasol, grid2))
 
         val a3 = intArrayOf(0, 1, 1, 1, 0)
         val b3 = intArrayOf(0, 1, 1, 0, 0)
@@ -65,8 +58,7 @@ class BattleActivity : AppCompatActivity() {
         val d3 = intArrayOf(0, 1, 0, 0, 0)
         val e3 = intArrayOf(0, 1, 0, 0, 0)
         val grid3 = arrayOf(a3, b3, c3, d3, e3)
-        player1deck.add(Card(R.drawable.flag, grid3))
-        nousecard1.add(2)
+        deckField1.deck.add(Card(R.drawable.flag, grid3))
 
         val a4 = intArrayOf(0, 0, 0, 0, 0)
         val b4 = intArrayOf(0, 1, 0, 1, 0)
@@ -74,8 +66,7 @@ class BattleActivity : AppCompatActivity() {
         val d4 = intArrayOf(0, 1, 0, 1, 0)
         val e4 = intArrayOf(0, 0, 0, 0, 0)
         val grid4 = arrayOf(a4, b4, c4, d4, e4)
-        player1deck.add(Card(R.drawable.crab, grid4))
-        nousecard1.add(3)
+        deckField1.deck.add(Card(R.drawable.crab, grid4))
 
         val a5 = intArrayOf(0, 0, 0, 0, 0)
         val b5 = intArrayOf(0, 1, 1, 1, 0)
@@ -83,73 +74,87 @@ class BattleActivity : AppCompatActivity() {
         val d5 = intArrayOf(0, 0, 0, 1, 0)
         val e5 = intArrayOf(0, 0, 1, 0, 0)
         val grid5 = arrayOf(a5, b5, c5, d5, e5)
-        player1deck.add(Card(R.drawable.thinking, grid5))
-        nousecard1.add(4)
+        deckField1.deck.add(Card(R.drawable.thinking, grid5))
 
-        setcard()
+
+        // フロントへ更新
+        updategrid(gridmap.gridmap)
+        deckField1.reload()
+        setCard(deckField1.imageArray())
     }
 
     // グリッドをクリックしたときに実行される関数
     @SuppressLint("SetTextI18n")
     fun onClickGrid(view: View){
 
-        // カードが選択されている場合のみ作動する
-//        if (!cardflag){
-//            return
-//        }
+        // カードが選択されていなければ何もしない
+        if (!cardflag){
+            return
+        }
 
         // クリックしたボタンを座標に変換
+        val dataText: TextView = findViewById (R.id.result)
         val index = idtoindex(view)
+        val selectedRange = deckField1.deck[deckField1.handCard[selectedCardId]].Range
 
-        // 今回選択した位置が一致していれば確定する
-
-//        if (index === selectedCoordinate){
-//
-//        }
-
-        // 座標を保持しておく
-        selectedCoordinate = index
-
-        if (nowTurn == condition.Player1){
-            nowTurn = condition.Player2
+        // 置ければ置く
+        if ( gridmap.canset(index, selectedRange, nowTurn) ){
+            gridmap.setcolor(index, selectedRange, nowTurn)
+            deckField1.choice(selectedCardId)
+            updategrid(gridmap.gridmap)
+            setCard(deckField1.imageArray())
+            changePlayer()
+            cardflag = false
         }
         else{
-            nowTurn = condition.Player1
+            dataText.text = "そこにはおけません"
         }
-
     }
-    // 画面下のカードをクリックしたとき、その情報を引き渡す
-    fun onClickCard(view: View?){
-        //動作確認
-        finish()
 
-        // グリッドを選択していたら解除する
-        if (gridflag) {
-            gridflag = false
+    // 画面下のカードをクリックしたとき、その情報を引き渡す
+    fun onClickCard(view: View){
+
+        val dataText: TextView = findViewById (R.id.data)
+
+        // クリックしたカードの能力を取り出す
+        val clickButton = when(view.id){
+            R.id.cardbutton1 -> 0
+            R.id.cardbutton2 -> 1
+            R.id.cardbutton3 -> 2
+            else -> -1
         }
 
-        // カード情報が格納されている場合にはそれを破棄する(選択解除)
-        // 破棄ではなく、cardflag をfalseにする
-        if (cardflag) {
+        // カードが何もない時には何もしない
+        if (deckField1.handCard[clickButton] == -1){
+            dataText.text = "not select"
             cardflag = false
             return
         }
-        // カード情報がまだ格納されていないなら、格納する
-        //
 
+        // 同じカードを連続でクリックした場合にはキャンセルする
+        if (cardflag && (clickButton == selectedCardId)){
+            dataText.text = "cancel"
+            cardflag = false
+            return
+        }
 
+        selectedCardId = clickButton
+        dataText.text = clickButton.toString()
+        cardflag = true
     }
+
+
+
     // gridmap からフロントへの更新を行う
     private fun updategrid (gridmap: Array<Array<condition>>) {
-        val gridcolumn = gridmap.size
-        val gridrow = gridmap[0].size
-        for (i in 0 until gridcolumn) {
-            for (j in 0 until gridrow) {
-                // val arr = intArrayOf(i, j)
+        val gridColumn = gridmap.size
+        val gridRow = gridmap[0].size
+        for (i in 0 until gridColumn) {
+            for (j in 0 until gridRow) {
                 val imageButtonId = indextoid(i, j)
                 val myImage: ImageButton = findViewById (imageButtonId)
                 // println(i.toString() +j.toString() +imageButtonId)
-                // gridmap の状態によって色を更新する
+                // gridMap の状態によって色を更新する
                 when (gridmap[i][j]) {
                     condition.Empty -> myImage.setBackgroundResource(R.drawable.gray)
                     condition.Player1 -> myImage.setBackgroundResource(R.drawable.blue)
@@ -160,40 +165,22 @@ class BattleActivity : AppCompatActivity() {
     }
 
     // デッキからカードをランダムで選んで設置する
-    private fun setcard () {
+    private fun setCard (imageList: MutableList<Int>) {
         // 枚数が足りない場合にはwhite で対応する
         val myImage1: ImageButton = findViewById (R.id.cardbutton1)
         val myImage2: ImageButton = findViewById (R.id.cardbutton2)
         val myImage3: ImageButton = findViewById (R.id.cardbutton3)
-        if (nousecard1.isNotEmpty()) {
-            val leng = nousecard1.size
-            val selectedcard1 = nousecard1[(0 until leng).random()]
-            myImage1.setBackgroundResource(player1deck[selectedcard1].Image)
-            nousecard1.remove(selectedcard1)
+        myImage1.setBackgroundResource(imageList[0])
+        myImage2.setBackgroundResource(imageList[1])
+        myImage3.setBackgroundResource(imageList[2])
+    }
+
+    private fun changePlayer(){
+        if (nowTurn == condition.Player1){
+            nowTurn = condition.Player2
         }
         else{
-            myImage1.setBackgroundResource(R.drawable.white)
+            nowTurn = condition.Player1
         }
-
-        if (nousecard1.isNotEmpty()) {
-            val leng = nousecard1.size
-            val selectedcard2 = nousecard1[(0 until leng).random()]
-            myImage2.setBackgroundResource(player1deck[selectedcard2].Image)
-            nousecard1.remove(selectedcard2)
-        }
-        else{
-            myImage2.setBackgroundResource(R.drawable.white)
-        }
-
-        if (nousecard1.isNotEmpty()) {
-            val leng = nousecard1.size
-            val selectedcard3 = nousecard1[(0 until leng).random()]
-            myImage3.setBackgroundResource(player1deck[selectedcard3].Image)
-            nousecard1.remove(selectedcard3)
-        }
-        else{
-            myImage3.setBackgroundResource(R.drawable.white)
-        }
-
     }
 }

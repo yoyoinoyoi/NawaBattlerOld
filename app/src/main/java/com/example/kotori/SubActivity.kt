@@ -32,7 +32,7 @@ class SubActivity : AppCompatActivity() {
 
         for (i in 0..7) {
             for (j in 0..7) {
-                imageButton[i][j]!!.setImageResource(R.drawable.pink)
+                imageButton[i][j]!!.setImageResource(R.drawable.gray)
                 imageButton[i][j]!!.layoutParams = LinearLayout.LayoutParams(35, 35)
                 if ((j + 1) % 2 != 0) {
                     if ((i + 1) % 2 != 0)

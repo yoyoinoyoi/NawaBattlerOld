@@ -14,14 +14,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val rollButton: Button = findViewById(R.id.roll_button)
-        rollButton.setOnClickListener { rollDice() }
-    }
-
-    private fun rollDice() {
-        val resultText: TextView = findViewById(R.id.result_text)
-        val randomInt = (1..6).random()
-        resultText.text = randomInt.toString()
     }
 
     // 実行ボタンタップ時
