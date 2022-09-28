@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     // 実行ボタンタップ時
     fun onButtonSub(view: View?){
-        val intent = Intent(this, SubActivity::class.java)
+        val intent = Intent(this, DeckActivity::class.java)
         startActivity(intent)
     }
 

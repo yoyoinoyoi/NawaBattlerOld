@@ -8,4 +8,8 @@
     <string name="white">white</string>
     <string name="string_condition">condition</string>
     <string name="gotobattle">Battle!</string>
+    <string name="gotodeck">Deck</string>
+    <string name="Turn">Turn</string>
+    <string name="versus">vs</string>
+    <string name="initscore">0</string>
 </resources>
