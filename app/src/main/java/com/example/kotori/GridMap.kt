@@ -76,12 +76,12 @@ class GridMap(initmap: Array<Array<condition>>) {
 //        for ((x, y) in rangecoordinate){
 //            println(x.toString() + y.toString())
 //        }
-
-        println("candidate:")
-        for (value in candidate){
-            println(value)
-        }
-        println("-------")
+//
+//        println("candidate:")
+//        for (value in candidate){
+//            println(value)
+//        }
+//        println("-------")
 
         // candidate を少なくとも含んでいるか
         var f1 = false

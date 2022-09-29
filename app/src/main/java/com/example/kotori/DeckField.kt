@@ -13,13 +13,13 @@ class DeckField() {
 
     // index は0-indexed
     // 手札の index 番目のカードを選択したら、そのカードの効果を返す
-    fun playCard(index: Int): Array<IntArray>{
-        val choiceCard = this.handCard[index]
-        val selectedCard = this.stack[(0 until this.stack.size).random()]
-        this.stack.remove(selectedCard)
-        this.handCard[index] = selectedCard
-        return this.deck[choiceCard].Range
-    }
+//    fun playCard(index: Int): Array<IntArray>{
+//        val choiceCard = this.handCard[index]
+//        val selectedCard = this.stack[(0 until this.stack.size).random()]
+//        this.stack.remove(selectedCard)
+//        this.handCard[index] = selectedCard
+//        return this.deck[choiceCard].Range
+//    }
 
     // フロントへ表示するときに使うメソッド
     // 手札のカードのImage を返す

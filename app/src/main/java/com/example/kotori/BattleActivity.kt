@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import org.w3c.dom.Text
 
 class BattleActivity : AppCompatActivity() {
 
@@ -19,7 +20,16 @@ class BattleActivity : AppCompatActivity() {
     // 選択されたカードの識別番号
     var selectedCardId = -1
     // 選択されたカードの能力(回転させるときなどに一時的に保持するため)
-    var selectedCardRange = Array(5){ mutableListOf(0, 0, 0, 0, 0) }
+    var selectedCardRange = Array(5){ intArrayOf(0, 0, 0, 0, 0) }
+    // 全ターン数
+    val totalTurn = 5
+    // 今のターン数
+    var nowTurnCount = 1
+    // Player1 のスコア
+    var player1Score = 0
+    // Player2 のスコア
+    var player2Score = 0
+
 
     // 初期化
 
@@ -29,6 +39,7 @@ class BattleActivity : AppCompatActivity() {
     val deckField1 = DeckField()
     val deckField2 = DeckField()
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.battle_field)
@@ -47,7 +58,7 @@ class BattleActivity : AppCompatActivity() {
         val b2 = intArrayOf(0, 1, 1, 1, 0)
         val c2 = intArrayOf(1, 0, 1, 0, 1)
         val d2 = intArrayOf(0, 0, 1, 0, 0)
-        val e2 = intArrayOf(0, 0, 1, 0, 0)
+        val e2 = intArrayOf(0, 1, 0, 0, 0)
         val grid2 = arrayOf(a2, b2, c2, d2, e2)
         deckField1.deck.add(Card(R.drawable.parasol, grid2))
         deckField2.deck.add(Card(R.drawable.parasol, grid2))
@@ -88,7 +99,6 @@ class BattleActivity : AppCompatActivity() {
     }
 
     // グリッドをクリックしたときに実行される関数
-    @SuppressLint("SetTextI18n")
     fun onClickGrid(view: View){
 
         // カードが選択されていなければ何もしない
@@ -98,17 +108,15 @@ class BattleActivity : AppCompatActivity() {
 
         // クリックしたボタンを座標に変換
         val index = idtoindex(view)
-        val selectedRange = deckField1.deck[deckField1.handCard[selectedCardId]].Range
-
         // 置ければ置く
-        if ( gridmap.canset(index, selectedRange, nowTurn) ){
-            gridmap.setcolor(index, selectedRange, nowTurn)
+        if ( gridmap.canset(index, selectedCardRange, nowTurn) ){
+            gridmap.setcolor(index, selectedCardRange, nowTurn)
             deckField1.choice(selectedCardId)
             updategrid(gridmap.gridmap)
             setCard(deckField1.imageArray())
             changePlayer()
 
-            conputerTurn(gridmap.gridmap)
+            computerTurn()
 
             cardflag = false
         }
@@ -138,13 +146,41 @@ class BattleActivity : AppCompatActivity() {
         }
 
         selectedCardId = clickButton
+        selectedCardRange = deckField1.deck[deckField1.handCard[selectedCardId]].Range
         cardflag = true
     }
 
+    // 回転ボタンをクリックしたときに実行される関数
+    fun onClickRotate(view: View){
+        // カードが選択されなければ実行しない
+        if (!cardflag) {
+            return
+        }
+        selectedCardRange = rotateRange(selectedCardRange)
+        cardflag = false
+    }
 
+    // パスボタンをクリックしたときに実行される関数
+    fun onClickPass(view: View){
+        if (!cardflag) {
+            return
+        }
+        deckField1.choice(selectedCardId)
+        setCard(deckField1.imageArray())
+        changePlayer()
+        computerTurn()
+        cardflag = false
+    }
+
+    /* 以下、プライベート関数 */
+
+    // Turn x / N: PlayerName として更新する
 
     // gridmap からフロントへの更新を行う
+    @SuppressLint("SetTextI18n")
     private fun updategrid (gridmap: Array<Array<condition>>) {
+        player1Score = 0
+        player2Score = 0
         val gridColumn = gridmap.size
         val gridRow = gridmap[0].size
         for (i in 0 until gridColumn) {
@@ -153,13 +189,25 @@ class BattleActivity : AppCompatActivity() {
                 val myImage: ImageButton = findViewById (imageButtonId)
                 // println(i.toString() +j.toString() +imageButtonId)
                 // gridMap の状態によって色を更新する
-                when (gridmap[i][j]) {
-                    condition.Empty -> myImage.setBackgroundResource(R.drawable.gray)
-                    condition.Player1 -> myImage.setBackgroundResource(R.drawable.blue)
-                    condition.Player2 -> myImage.setBackgroundResource(R.drawable.yellow)
+                if (gridmap[i][j] == condition.Player1){
+                    myImage.setBackgroundResource(R.drawable.blue)
+                    player1Score++
+                }
+                else if (gridmap[i][j] == condition.Player2){
+                    myImage.setBackgroundResource(R.drawable.yellow)
+                    player2Score++
+                }
+                else{
+                    myImage.setBackgroundResource(R.drawable.gray)
                 }
             }
         }
+        val turnText: TextView = findViewById (R.id.Turn)
+        turnText.text = "Turn $nowTurnCount / $totalTurn : $nowTurn"
+        val p1Text: TextView = findViewById (R.id.player1)
+        p1Text.text = "$player1Score"
+        val p2Text: TextView = findViewById (R.id.player2)
+        p2Text.text = "$player2Score"
     }
 
     // デッキからカードをランダムで選んで設置する
@@ -173,6 +221,19 @@ class BattleActivity : AppCompatActivity() {
         myImage3.setBackgroundResource(imageList[2])
     }
 
+    // Range を右に90度だけ回転させる
+    // Range: 5x5 の配列
+    private fun rotateRange(Range: Array<IntArray>): Array<IntArray>{
+        val newList = Array(5){ intArrayOf(0, 0, 0, 0, 0) }
+        for (i in 0 until Range.size){
+            for (j in 0 until Range[0].size){
+                newList[i][j] = Range[j][Range[0].size -i -1]
+            }
+        }
+        return newList
+    }
+
+    // プレイヤーの順番を管理する
     private fun changePlayer(){
         if (nowTurn == condition.Player1){
             nowTurn = condition.Player2
@@ -183,8 +244,63 @@ class BattleActivity : AppCompatActivity() {
     }
 
     // コンピュータが実行するとき
-    private fun conputerTurn(gridmap: Array<Array<condition>>) {
+    private fun computerTurn() {
         // deck はdeckField2 を用いる
 
+        // 手札からまずカードを決める
+        for (choiceCardId in 0 until deckField2.handCard.size){
+            // 回転させる
+            val choiceCard = deckField2.handCard[choiceCardId]
+            if (choiceCard == -1){
+                continue
+            }
+            val choiceRange1 = deckField2.deck[choiceCard].Range
+            val choiceRange2 = rotateRange(choiceRange1)
+            val choiceRange3 = rotateRange(choiceRange2)
+            val choiceRange4 = rotateRange(choiceRange3)
+
+            val candidates = mutableListOf<IntArray>()
+            val ranges = mutableListOf<Array<IntArray>>()
+            for (i in 0 until gridmap.gridmap.size){
+                for (j in 0 until gridmap.gridmap[0].size){
+                    if (gridmap.canset(intArrayOf(i, j), choiceRange1, condition.Player2)){
+                        candidates.add(intArrayOf(i, j))
+                        ranges.add(choiceRange1)
+                    }
+                    if (gridmap.canset(intArrayOf(i, j), choiceRange2, condition.Player2)){
+                        candidates.add(intArrayOf(i, j))
+                        ranges.add(choiceRange2)
+                    }
+                    if (gridmap.canset(intArrayOf(i, j), choiceRange3, condition.Player2)){
+                        candidates.add(intArrayOf(i, j))
+                        ranges.add(choiceRange3)
+                    }
+                    if (gridmap.canset(intArrayOf(i, j), choiceRange4, condition.Player2)){
+                        candidates.add(intArrayOf(i, j))
+                        ranges.add(choiceRange4)
+                    }
+                }
+            }
+            if (candidates.isNotEmpty()){
+                val randomNum = (candidates.indices).random()
+                gridmap.setcolor(candidates[randomNum], ranges[randomNum], condition.Player2)
+
+                deckField2.choice(choiceCardId)
+                changePlayer()
+                updategrid(gridmap.gridmap)
+                return
+            }
+        }
+
+        // 置けなくなったら適当に選んで捨てる
+        for (choiceCardId in 0 until deckField2.handCard.size){
+            val choiceCard = deckField2.handCard[choiceCardId]
+            if (choiceCard != -1){
+                deckField2.choice(choiceCard)
+                changePlayer()
+                updategrid(gridmap.gridmap)
+                return
+            }
+        }
     }
 }
