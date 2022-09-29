@@ -72,6 +72,24 @@ class BattleActivity : AppCompatActivity() {
         deckField1.deck.add(Card(R.drawable.boomerang, grid3))
         deckField2.deck.add(Card(R.drawable.boomerang, grid3))
 
+        val a4 = intArrayOf(0, 0, 0, 0, 0)
+        val b4 = intArrayOf(0, 1, 1, 1, 0)
+        val c4 = intArrayOf(0, 1, 1, 1, 0)
+        val d4 = intArrayOf(0, 1, 1, 1, 0)
+        val e4 = intArrayOf(0, 0, 0, 0, 0)
+        val grid4 = arrayOf(a4, b4, c4, d4, e4)
+        deckField1.deck.add(Card(R.drawable.dynamite, grid4))
+        deckField2.deck.add(Card(R.drawable.dynamite, grid4))
+
+        val a5 = intArrayOf(0, 0, 1, 1, 1)
+        val b5 = intArrayOf(0, 1, 0, 1, 1)
+        val c5 = intArrayOf(0, 1, 0, 0, 1)
+        val d5 = intArrayOf(0, 1, 0, 0, 0)
+        val e5 = intArrayOf(0, 1, 0, 0, 0)
+        val grid5 = arrayOf(a5, b5, c5, d5, e5)
+        deckField1.deck.add(Card(R.drawable.scythe, grid5))
+        deckField2.deck.add(Card(R.drawable.scythe, grid5))
+
         val a6 = intArrayOf(0, 0, 0, 0, 0)
         val b6 = intArrayOf(0, 0, 1, 0, 0)
         val c6 = intArrayOf(0, 1, 1, 1, 0)
@@ -90,6 +108,14 @@ class BattleActivity : AppCompatActivity() {
         deckField1.deck.add(Card(R.drawable.hinawaju, grid7))
         deckField2.deck.add(Card(R.drawable.hinawaju, grid7))
 
+        val a8 = intArrayOf(0, 1, 1, 1, 1)
+        val b8 = intArrayOf(1, 1, 1, 1, 0)
+        val c8 = intArrayOf(0, 0, 1, 0, 0)
+        val d8 = intArrayOf(0, 0, 0, 0, 0)
+        val e8 = intArrayOf(0, 0, 0, 0, 0)
+        val grid8 = arrayOf(a8, b8, c8, d8, e8)
+        deckField1.deck.add(Card(R.drawable.wave, grid8))
+        deckField2.deck.add(Card(R.drawable.wave, grid8))
 
         // フロントへ更新
         updategrid(gridmap.gridmap)
@@ -104,6 +130,13 @@ class BattleActivity : AppCompatActivity() {
         // カードが選択されていなければ何もしない
         if (!cardflag){
             return
+        }
+
+        // プレビューを表示する
+        if (!gridflag){
+            // 置けるのであれば同じ色の者を表示する
+
+            // 置けないならグレーで表現
         }
 
         // クリックしたボタンを座標に変換

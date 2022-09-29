@@ -29,7 +29,7 @@ class DeckField() {
 
             // -1(何もない) 場合には白の画像を挿入
             if (imageIndex == -1){
-                ret.add(R.drawable.white)
+                ret.add(R.drawable.empty)
             }
             else {
                 ret.add(this.deck[imageIndex].Image)
