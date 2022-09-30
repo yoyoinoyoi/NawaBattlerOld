@@ -875,6 +875,20 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
+        android:id="@+id/player1result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:text=""
+        android:textSize="35sp"
+        app:layout_constraintEnd_toStartOf="@+id/versus"
+        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
         android:id="@+id/player1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -883,7 +897,7 @@
         android:text="@string/initscore"
         android:textSize="35sp"
         app:layout_constraintEnd_toStartOf="@+id/versus"
-        app:layout_constraintHorizontal_bias="0.738"
+        app:layout_constraintHorizontal_bias="0.874"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
         tools:ignore="MissingConstraints" />
@@ -906,9 +920,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="272dp"
+        android:layout_marginStart="224dp"
         android:layout_marginTop="60dp"
         android:text="@string/initscore"
+        android:textSize="35sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/player2result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="284dp"
+        android:layout_marginTop="60dp"
+        android:text=""
         android:textSize="35sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout2"

@@ -11,8 +11,6 @@ import org.w3c.dom.Text
 
 class BattleActivity : AppCompatActivity() {
 
-    // どちらのターンかを識別する
-    var nowTurn = condition.Player1
     // 現在グリッドを操作しているか
     var gridflag = false
     // 現在カードを操作しているか
@@ -120,9 +118,9 @@ class BattleActivity : AppCompatActivity() {
         deckField2.deck.add(Card(R.drawable.wave, grid8))
 
         // フロントへ更新
-        updategrid(gridmap.gridmap)
         deckField1.reload()
         deckField2.reload()
+        updategrid(gridmap.gridmap)
         setCard(deckField1.imageArray())
     }
 
@@ -147,17 +145,8 @@ class BattleActivity : AppCompatActivity() {
         }
 
         // 置ければ置く
-        if ( gridmap.canset(index, selectedCardRange, nowTurn) ){
-            gridmap.setcolor(index, selectedCardRange, nowTurn)
-            deckField1.choice(selectedCardId)
-            updategrid(gridmap.gridmap)
-            setCard(deckField1.imageArray())
-            changePlayer()
-
-            computerTurn()
-
-            cardflag = false
-            gridflag = false
+        if ( gridmap.canset(index, selectedCardRange, condition.Player1) ){
+            play()
         }
     }
 
@@ -205,12 +194,9 @@ class BattleActivity : AppCompatActivity() {
         if (!cardflag) {
             return
         }
-        deckField1.choice(selectedCardId)
-        setCard(deckField1.imageArray())
-        changePlayer()
-        computerTurn()
-        cardflag = false
-        gridflag = false
+        selectedGridCoordinates = intArrayOf(0, 0)
+        selectedCardRange = Array(5){ intArrayOf(0, 0, 0, 0, 0)}
+        play()
     }
 
     /* 以下、プライベート関数 */
@@ -244,7 +230,8 @@ class BattleActivity : AppCompatActivity() {
             }
         }
         val turnText: TextView = findViewById (R.id.Turn)
-        turnText.text = "Turn $nowTurnCount / $totalTurn : $nowTurn"
+        turnText.text = "Turn $nowTurnCount / $totalTurn : " +
+                "Card ${deckField1.stack.size + deckField1.handCard.size} / ${deckField1.deck.size}"
         val p1Text: TextView = findViewById (R.id.player1)
         p1Text.text = "$player1Score"
         val p2Text: TextView = findViewById (R.id.player2)
@@ -273,6 +260,7 @@ class BattleActivity : AppCompatActivity() {
         }
         return newList
     }
+
 
     // プレビューを表示する
     private fun preview(){
@@ -336,18 +324,8 @@ class BattleActivity : AppCompatActivity() {
 
     }
 
-    // プレイヤーの順番を管理する
-    private fun changePlayer(){
-        if (nowTurn == condition.Player1){
-            nowTurn = condition.Player2
-        }
-        else{
-            nowTurn = condition.Player1
-        }
-    }
-
     // コンピュータが実行するとき
-    private fun computerTurn() {
+    private fun computerTurn(): Triple<IntArray, Array<IntArray>, condition>{
         // deck はdeckField2 を用いる
 
         // 手札からまずカードを決める
@@ -386,12 +364,9 @@ class BattleActivity : AppCompatActivity() {
             }
             if (candidates.isNotEmpty()){
                 val randomNum = (candidates.indices).random()
-                gridmap.setcolor(candidates[randomNum], ranges[randomNum], condition.Player2)
-
+                // gridmap.setcolor(candidates[randomNum], ranges[randomNum], condition.Player2)
                 deckField2.choice(choiceCardId)
-                changePlayer()
-                updategrid(gridmap.gridmap)
-                return
+                return Triple(candidates[randomNum], ranges[randomNum], condition.Player2)
             }
         }
 
@@ -400,9 +375,63 @@ class BattleActivity : AppCompatActivity() {
             val choiceCard = deckField2.handCard[choiceCardId]
             if (choiceCard != -1){
                 deckField2.choice(choiceCardId)
-                changePlayer()
-                updategrid(gridmap.gridmap)
-                return
+                return Triple(intArrayOf(0, 0), Array(5){ intArrayOf(0, 0, 0, 0, 0)}, condition.Player2)
+            }
+        }
+
+        // たぶんここまでいかない
+        return Triple(intArrayOf(0, 0), Array(5){ intArrayOf(0, 0, 0, 0, 0)}, condition.Player2)
+    }
+
+    private fun play(){
+        val computer = computerTurn()
+        var myRangeSize = 0
+        var comRangeSize = 0
+        // それぞれのカードの範囲を比較
+        for (i in 0 until 5){
+            for (j in 0 until 5){
+                if (selectedCardRange[i][j] == 1){
+                    myRangeSize++
+                }
+                if (computer.second[i][j] == 1){
+                    comRangeSize++
+                }
+            }
+        }
+        if (myRangeSize < comRangeSize){
+            gridmap.setcolor(computer.first, computer.second, computer.third)
+            gridmap.setcolor(selectedGridCoordinates, selectedCardRange, condition.Player1)
+        }
+        else{
+            gridmap.setcolor(selectedGridCoordinates, selectedCardRange, condition.Player1)
+            gridmap.setcolor(computer.first, computer.second, computer.third)
+        }
+
+        cardflag = false
+        gridflag = false
+        deckField1.choice(selectedCardId)
+        setCard(deckField1.imageArray())
+        updategrid(gridmap.gridmap)
+        gameSet()
+        nowTurnCount++
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun gameSet(){
+        if (nowTurnCount == totalTurn){
+            val result1Text: TextView = findViewById (R.id.player1result)
+            val result2Text: TextView = findViewById (R.id.player2result)
+            if (player1Score > player2Score){
+                result1Text.text = "WIN!!"
+                result2Text.text = "LOSE..."
+            }
+            else if (player1Score < player2Score){
+                result1Text.text = "LOSE..."
+                result2Text.text = "WIN!!"
+            }
+            else{
+                result1Text.text = "DRAW"
+                result2Text.text = "DRAW"
             }
         }
     }

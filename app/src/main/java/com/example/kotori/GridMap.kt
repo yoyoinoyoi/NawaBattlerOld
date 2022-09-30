@@ -116,13 +116,11 @@ class GridMap(initmap: Array<Array<condition>>) {
     }
 
 
-    // 実際に置く. 置けない場合にはそのまま変更なし
+    // 実際に置く. 置けない場合でも実行されるので注意
     fun setcolor(Coordinates: IntArray, Range: Array<IntArray>, player: condition){
-        if (canset(Coordinates, Range, player)){
-            val rangecoordinate = this.rangetocoordinate(Range)
-            for ((x, y) in rangecoordinate){
-                this.gridmap[x+Coordinates[0]][y+Coordinates[1]] = player
-            }
+        val rangeCoordinate = this.rangetocoordinate(Range)
+        for ((x, y) in rangeCoordinate){
+            this.gridmap[x+Coordinates[0]][y+Coordinates[1]] = player
         }
     }
 }
