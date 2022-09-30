@@ -21,6 +21,8 @@ class BattleActivity : AppCompatActivity() {
     var selectedCardId = -1
     // 選択されたカードの能力(回転させるときなどに一時的に保持するため)
     var selectedCardRange = Array(5){ intArrayOf(0, 0, 0, 0, 0) }
+    // 選択されたgrid の座標
+    var selectedGridCoordinates = intArrayOf(-1, -1)
     // 全ターン数
     val totalTurn = 5
     // 今のターン数
@@ -132,15 +134,18 @@ class BattleActivity : AppCompatActivity() {
             return
         }
 
-        // プレビューを表示する
-        if (!gridflag){
-            // 置けるのであれば同じ色の者を表示する
-
-            // 置けないならグレーで表現
-        }
-
         // クリックしたボタンを座標に変換
         val index = idtoindex(view)
+
+        // プレビューを表示する
+        if ( !( gridflag && (index[0] == selectedGridCoordinates[0]) && (index[1] == selectedGridCoordinates[1]) ) ){
+
+            selectedGridCoordinates = index
+            gridflag = true
+            preview()
+            return
+        }
+
         // 置ければ置く
         if ( gridmap.canset(index, selectedCardRange, nowTurn) ){
             gridmap.setcolor(index, selectedCardRange, nowTurn)
@@ -152,6 +157,7 @@ class BattleActivity : AppCompatActivity() {
             computerTurn()
 
             cardflag = false
+            gridflag = false
         }
     }
 
@@ -181,6 +187,7 @@ class BattleActivity : AppCompatActivity() {
         selectedCardId = clickButton
         selectedCardRange = deckField1.deck[deckField1.handCard[selectedCardId]].Range
         cardflag = true
+        gridflag = false
     }
 
     // 回転ボタンをクリックしたときに実行される関数
@@ -190,7 +197,7 @@ class BattleActivity : AppCompatActivity() {
             return
         }
         selectedCardRange = rotateRange(selectedCardRange)
-        cardflag = false
+        preview()
     }
 
     // パスボタンをクリックしたときに実行される関数
@@ -203,6 +210,7 @@ class BattleActivity : AppCompatActivity() {
         changePlayer()
         computerTurn()
         cardflag = false
+        gridflag = false
     }
 
     /* 以下、プライベート関数 */
@@ -264,6 +272,68 @@ class BattleActivity : AppCompatActivity() {
             }
         }
         return newList
+    }
+
+    // プレビューを表示する
+    private fun preview(){
+        // カードの範囲から座標にまず変換する
+        val putCoordinates = mutableListOf<IntArray>()
+        for (i in 0 until selectedCardRange.size){
+            for (j in 0 until selectedCardRange[0].size){
+                if (selectedCardRange[i][j] == 1){
+
+                    val x = selectedGridCoordinates[0] + (i -2)
+                    val y = selectedGridCoordinates[1] + (j -2)
+                    // 範囲外なら何もしない
+                    if ((x < 0) || (x >= gridmap.gridmap.size)){
+                        continue
+                    }
+                    if ((y < 0) || (y >= gridmap.gridmap[0].size)){
+                        continue
+                    }
+
+                    putCoordinates.add(intArrayOf(x, y))
+                }
+            }
+        }
+
+        for ((x, y) in putCoordinates){
+            println(x.toString() + y.toString())
+        }
+
+        for (i in 0 until gridmap.gridmap.size){
+            for (j in 0 until gridmap.gridmap[0].size){
+
+                val imageButtonId = indextoid(i, j)
+                val myImage: ImageButton = findViewById (imageButtonId)
+
+                if (gridmap.gridmap[i][j] == condition.Player1) {
+                    myImage.setBackgroundResource(R.drawable.blue)
+                    player1Score++
+                } else if (gridmap.gridmap[i][j] == condition.Player2) {
+                    myImage.setBackgroundResource(R.drawable.yellow)
+                    player2Score++
+                } else {
+                    myImage.setBackgroundResource(R.drawable.gray)
+                }
+            }
+        }
+        for ((i, j) in putCoordinates){
+
+            val imageButtonId = indextoid(i, j)
+            val myImage: ImageButton = findViewById (imageButtonId)
+
+            // 置けるのであれば水色
+            if (gridmap.gridmap[i][j] == condition.Empty){
+                myImage.setBackgroundResource(R.drawable.tentative_blue)
+            }
+            //置けないなら灰色
+            else{
+                myImage.setBackgroundResource(R.drawable.tentative_gray)
+            }
+
+        }
+
     }
 
     // プレイヤーの順番を管理する
@@ -329,7 +399,7 @@ class BattleActivity : AppCompatActivity() {
         for (choiceCardId in 0 until deckField2.handCard.size){
             val choiceCard = deckField2.handCard[choiceCardId]
             if (choiceCard != -1){
-                deckField2.choice(choiceCard)
+                deckField2.choice(choiceCardId)
                 changePlayer()
                 updategrid(gridmap.gridmap)
                 return

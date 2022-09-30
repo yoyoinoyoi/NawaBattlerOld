@@ -99,8 +99,8 @@ class GridMap(initmap: Array<Array<condition>>) {
             }
 
             val coordid = this.id(intArrayOf(vx, vy))
-
-            println(coordid)
+//
+//            println(coordid)
             // candidate を含んでいるか
             if (coordid in candidate){
                 f1 = true
