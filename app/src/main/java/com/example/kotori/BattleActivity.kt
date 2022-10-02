@@ -20,7 +20,7 @@ class BattleActivity : AppCompatActivity() {
     // 選択されたカードの能力(回転させるときなどに一時的に保持するため)
     var selectedCardRange = Array(5){ intArrayOf(0, 0, 0, 0, 0) }
     // 選択されたgrid の座標
-    var selectedGridCoordinates = intArrayOf(-1, -1)
+    var selectedGridCoordinates = intArrayOf(6, 4)
     // 全ターン数
     val totalTurn = 5
     // 今のターン数
@@ -164,12 +164,16 @@ class BattleActivity : AppCompatActivity() {
         // カードが何もない時には何もしない
         if (deckField1.handCard[clickButton] == -1){
             cardflag = false
+            selectedCardRange = Array(5){ intArrayOf(0, 0, 0, 0, 0)}
+            preview()
             return
         }
 
         // 同じカードを連続でクリックした場合にはキャンセルする
         if (cardflag && (clickButton == selectedCardId)){
             cardflag = false
+            selectedCardRange = Array(5){ intArrayOf(0, 0, 0, 0, 0)}
+            preview()
             return
         }
 
@@ -177,6 +181,8 @@ class BattleActivity : AppCompatActivity() {
         selectedCardRange = deckField1.deck[deckField1.handCard[selectedCardId]].Range
         cardflag = true
         gridflag = false
+        preview()
+
     }
 
     // 回転ボタンをクリックしたときに実行される関数
@@ -229,13 +235,38 @@ class BattleActivity : AppCompatActivity() {
                 }
             }
         }
+        // スコア更新
         val turnText: TextView = findViewById (R.id.Turn)
+
         turnText.text = "Turn $nowTurnCount / $totalTurn : " +
                 "Card ${deckField1.stack.size + deckField1.handCard.size} / ${deckField1.deck.size}"
         val p1Text: TextView = findViewById (R.id.player1)
         p1Text.text = "$player1Score"
         val p2Text: TextView = findViewById (R.id.player2)
         p2Text.text = "$player2Score"
+
+        // ゲーム終了なら
+        val result1Text: TextView = findViewById (R.id.player1result)
+        val result2Text: TextView = findViewById (R.id.player2result)
+
+        if (nowTurnCount > totalTurn){
+            // Turn表示ではなくGameset と表示する
+            turnText.text = "GameSet!" +
+                    "Card ${deckField1.stack.size + deckField1.handCard.size} / ${deckField1.deck.size}"
+            if (player1Score > player2Score){
+                result1Text.text = "WIN!!"
+                result2Text.text = "LOSE..."
+            }
+            else if (player1Score < player2Score){
+                result1Text.text = "LOSE..."
+                result2Text.text = "WIN!!"
+            }
+            else{
+                result1Text.text = "DRAW"
+                result2Text.text = "DRAW"
+            }
+        }
+        nowTurnCount++
     }
 
     // デッキからカードをランダムで選んで設置する
@@ -383,6 +414,7 @@ class BattleActivity : AppCompatActivity() {
         return Triple(intArrayOf(0, 0), Array(5){ intArrayOf(0, 0, 0, 0, 0)}, condition.Player2)
     }
 
+    // 自分と相手のカードから盤面を更新するまでの流れ
     private fun play(){
         val computer = computerTurn()
         var myRangeSize = 0
@@ -398,41 +430,35 @@ class BattleActivity : AppCompatActivity() {
                 }
             }
         }
+
+        // カードの範囲が大きい順に更新していく
         if (myRangeSize < comRangeSize){
             gridmap.setcolor(computer.first, computer.second, computer.third)
             gridmap.setcolor(selectedGridCoordinates, selectedCardRange, condition.Player1)
         }
-        else{
+        else if(myRangeSize > comRangeSize){
             gridmap.setcolor(selectedGridCoordinates, selectedCardRange, condition.Player1)
             gridmap.setcolor(computer.first, computer.second, computer.third)
         }
+        else{
+            // 同じならランダムで更新
+            val rv = Math.random()
+            if (100 * rv > 50){
+                gridmap.setcolor(computer.first, computer.second, computer.third)
+                gridmap.setcolor(selectedGridCoordinates, selectedCardRange, condition.Player1)
+            }
+            else{
+                gridmap.setcolor(selectedGridCoordinates, selectedCardRange, condition.Player1)
+                gridmap.setcolor(computer.first, computer.second, computer.third)
+            }
+        }
+
 
         cardflag = false
         gridflag = false
         deckField1.choice(selectedCardId)
         setCard(deckField1.imageArray())
         updategrid(gridmap.gridmap)
-        gameSet()
-        nowTurnCount++
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun gameSet(){
-        if (nowTurnCount == totalTurn){
-            val result1Text: TextView = findViewById (R.id.player1result)
-            val result2Text: TextView = findViewById (R.id.player2result)
-            if (player1Score > player2Score){
-                result1Text.text = "WIN!!"
-                result2Text.text = "LOSE..."
-            }
-            else if (player1Score < player2Score){
-                result1Text.text = "LOSE..."
-                result2Text.text = "WIN!!"
-            }
-            else{
-                result1Text.text = "DRAW"
-                result2Text.text = "DRAW"
-            }
-        }
+        selectedGridCoordinates = intArrayOf(6, 4)
     }
 }
