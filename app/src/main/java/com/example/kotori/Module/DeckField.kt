@@ -1,4 +1,6 @@
-package com.example.kotori
+package com.example.kotori.Module
+
+import com.example.kotori.R
 
 class DeckField() {
     var deck: MutableList<Card>

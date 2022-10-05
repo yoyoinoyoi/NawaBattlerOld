@@ -1,13 +1,16 @@
 package com.example.kotori
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
-import org.w3c.dom.Text
+import com.example.kotori.Module.Card
+import com.example.kotori.Module.DeckField
+import com.example.kotori.Module.GridMap
+import com.example.kotori.Module.condition
+import com.example.kotori.data.AllCard
 
 class BattleActivity : AppCompatActivity() {
 
@@ -34,7 +37,7 @@ class BattleActivity : AppCompatActivity() {
     // 初期化
 
     // グリッド情報
-    var gridmap_base = Array(12){ Array(10){condition.Empty} }
+    var gridmap_base = Array(12){ Array(10){ condition.Empty} }
     val gridmap = GridMap(gridmap_base)
     val deckField1 = DeckField()
     val deckField2 = DeckField()
@@ -43,6 +46,9 @@ class BattleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.battle_field)
+
+        AllCard
+
 
         // デッキのカード情報を入力
         val a1 = intArrayOf(0, 0, 1, 0, 0)

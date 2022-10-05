@@ -1,4 +1,4 @@
-package com.example.kotori
+package com.example.kotori.Module
 
 class GridMap(initmap: Array<Array<condition>>) {
     var gridmap: Array<Array<condition>>
