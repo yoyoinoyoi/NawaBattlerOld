@@ -98,22 +98,22 @@
     <Button
         android:id="@+id/Edit"
         android:layout_width="150dp"
-        android:layout_height="100dp"
+        android:layout_height="70dp"
         android:layout_marginStart="28dp"
         android:layout_marginBottom="220dp"
         android:onClick="onClickEdit"
-        android:text="Button"
+        android:text="@string/edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/Rename"
         android:layout_width="150dp"
-        android:layout_height="100dp"
+        android:layout_height="70dp"
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="220dp"
         android:onClick="onClickRename"
-        android:text="Button"
+        android:text="@string/rename"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

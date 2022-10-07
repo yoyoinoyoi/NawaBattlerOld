@@ -85,4 +85,44 @@ public val AllCard = arrayOf(
             intArrayOf(0, 0, 0, 0, 0)
         )
     ),
+    Card(
+        R.drawable.dragon,
+        arrayOf(
+            intArrayOf(0, 0, 0, 1, 1),
+            intArrayOf(0, 0, 0, 1, 1),
+            intArrayOf(0, 0, 1, 0, 0),
+            intArrayOf(0, 0, 1, 0, 0),
+            intArrayOf(1, 1, 0, 0, 0)
+        )
+    ),
+    Card(
+        R.drawable.spider,
+        arrayOf(
+            intArrayOf(0, 1, 0, 0, 1),
+            intArrayOf(0, 1, 0, 0, 1),
+            intArrayOf(0, 0, 1, 1, 0),
+            intArrayOf(0, 1, 0, 0, 1),
+            intArrayOf(0, 1, 0, 0, 1)
+        )
+    ),
+    Card(
+        R.drawable.firework,
+        arrayOf(
+            intArrayOf(0, 0, 1, 0, 0),
+            intArrayOf(0, 1, 1, 1, 0),
+            intArrayOf(0, 0, 1, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 1, 0, 0)
+        )
+    ),
+    Card(
+        R.drawable.shuriken,
+        arrayOf(
+            intArrayOf(0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 1, 1, 0),
+            intArrayOf(0, 0, 1, 0, 0),
+            intArrayOf(0, 1, 1, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0)
+        )
+    ),
 )

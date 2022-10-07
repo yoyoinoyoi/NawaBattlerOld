@@ -16,4 +16,7 @@
     <string name="draw">DRAW</string>
     <string name="initscore">0</string>
     <string name="owabi">まだできてません</string>
+    <string name="OK">OK</string>
+    <string name="edit">DECK EDIT</string>
+    <string name="rename">RENAME</string>
 </resources>

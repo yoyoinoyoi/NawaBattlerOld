@@ -44,7 +44,10 @@ class DeckActivity : AppCompatActivity() {
         // ファイルが無ければ作成する
         if (!file.exists()){
             val bufferedWriter = file.bufferedWriter()
-            file.bufferedWriter().use { bw -> bw.write("0\n1\n2\n3\n4\n5\n6\n7") }
+            bufferedWriter.write("0\n1\n2\n3\n4\n5\n6\n7")
+            bufferedWriter.close()
+            println("Create Deck")
+//            bufferedWriter.use { bw -> bw.write("0\n1\n2\n3\n4\n5\n6\n7") }
         }
 
         // ファイルにかかれたカードの画像を表示する
@@ -57,7 +60,6 @@ class DeckActivity : AppCompatActivity() {
             myImage.setBackgroundResource(AllCard[cardId].Image)
             cardIndex++
         }
-        bufferedReader.close()
         // クリックしたデッキのカード一覧を下に表示する
 
     }
@@ -68,7 +70,7 @@ class DeckActivity : AppCompatActivity() {
             return
         }
         val intent = Intent(this, SelectActivity::class.java)
-        intent.putExtra("INPUT_TEXT",clickDeck.toString())
+        intent.putExtra("deckId",clickDeck.toString())
         startActivity(intent)
     }
 
