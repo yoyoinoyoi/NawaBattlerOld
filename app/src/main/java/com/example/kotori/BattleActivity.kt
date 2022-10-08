@@ -11,6 +11,7 @@ import com.example.kotori.Module.DeckField
 import com.example.kotori.Module.GridMap
 import com.example.kotori.Module.condition
 import com.example.kotori.data.AllCard
+import java.io.File
 
 class BattleActivity : AppCompatActivity() {
 
@@ -45,83 +46,27 @@ class BattleActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.battle_field)
-
-        AllCard
+        setContentView(R.layout.activity_battle)
 
 
-        // デッキのカード情報を入力
-        val a1 = intArrayOf(0, 0, 1, 0, 0)
-        val b1 = intArrayOf(0, 1, 0, 1, 0)
-        val c1 = intArrayOf(1, 0, 0, 0, 1)
-        val d1 = intArrayOf(0, 1, 0, 1, 0)
-        val e1 = intArrayOf(0, 0, 1, 0, 0)
-        val grid1 = arrayOf(a1, b1, c1, d1, e1)
-        deckField1.deck.add(Card(R.drawable.palagon, grid1))
-        deckField2.deck.add(Card(R.drawable.palagon, grid1))
+        // 選んだデッキから生成する
 
-        val a2 = intArrayOf(0, 0, 1, 0, 0)
-        val b2 = intArrayOf(0, 1, 1, 1, 0)
-        val c2 = intArrayOf(1, 0, 1, 0, 1)
-        val d2 = intArrayOf(0, 0, 1, 0, 0)
-        val e2 = intArrayOf(0, 1, 0, 0, 0)
-        val grid2 = arrayOf(a2, b2, c2, d2, e2)
-        deckField1.deck.add(Card(R.drawable.parasol, grid2))
-        deckField2.deck.add(Card(R.drawable.parasol, grid2))
+        val deckId = intent.getStringExtra("deckId")!!
 
-        val a3 = intArrayOf(0, 0, 0, 0, 0)
-        val b3 = intArrayOf(0, 0, 0, 1, 0)
-        val c3 = intArrayOf(0, 0, 1, 0, 0)
-        val d3 = intArrayOf(0, 0, 0, 1, 0)
-        val e3 = intArrayOf(0, 0, 0, 0, 0)
-        val grid3 = arrayOf(a3, b3, c3, d3, e3)
-        deckField1.deck.add(Card(R.drawable.boomerang, grid3))
-        deckField2.deck.add(Card(R.drawable.boomerang, grid3))
+        // クリックされたデッキのカードを下に表示する
+        val internal = applicationContext.filesDir
+        val file = File(internal, "data$deckId")
 
-        val a4 = intArrayOf(0, 0, 0, 0, 0)
-        val b4 = intArrayOf(0, 1, 1, 1, 0)
-        val c4 = intArrayOf(0, 1, 1, 1, 0)
-        val d4 = intArrayOf(0, 1, 1, 1, 0)
-        val e4 = intArrayOf(0, 0, 0, 0, 0)
-        val grid4 = arrayOf(a4, b4, c4, d4, e4)
-        deckField1.deck.add(Card(R.drawable.dynamite, grid4))
-        deckField2.deck.add(Card(R.drawable.dynamite, grid4))
+        // ファイルにかかれたカードの画像を表示する
+        val bufferedReader = file.bufferedReader()
 
-        val a5 = intArrayOf(0, 0, 1, 1, 1)
-        val b5 = intArrayOf(0, 1, 0, 1, 1)
-        val c5 = intArrayOf(0, 1, 0, 0, 1)
-        val d5 = intArrayOf(0, 1, 0, 0, 0)
-        val e5 = intArrayOf(0, 1, 0, 0, 0)
-        val grid5 = arrayOf(a5, b5, c5, d5, e5)
-        deckField1.deck.add(Card(R.drawable.scythe, grid5))
-        deckField2.deck.add(Card(R.drawable.scythe, grid5))
+        bufferedReader.readLines().forEach {
+            val cardId = it.toInt()
+            deckField1.deck.add(AllCard[cardId])
+            deckField2.deck.add(AllCard[cardId])
+        }
 
-        val a6 = intArrayOf(0, 0, 0, 0, 0)
-        val b6 = intArrayOf(0, 0, 1, 0, 0)
-        val c6 = intArrayOf(0, 1, 1, 1, 0)
-        val d6 = intArrayOf(0, 0, 1, 0, 0)
-        val e6 = intArrayOf(0, 0, 0, 0, 0)
-        val grid6 = arrayOf(a6, b6, c6, d6, e6)
-        deckField1.deck.add(Card(R.drawable.bomb, grid6))
-        deckField2.deck.add(Card(R.drawable.bomb, grid6))
 
-        val a7 = intArrayOf(0, 1, 1, 0, 0)
-        val b7 = intArrayOf(0, 0, 1, 1, 0)
-        val c7 = intArrayOf(0, 0, 1, 0, 0)
-        val d7 = intArrayOf(0, 0, 1, 0, 0)
-        val e7 = intArrayOf(0, 0, 1, 0, 0)
-        val grid7 = arrayOf(a7, b7, c7, d7, e7)
-        deckField1.deck.add(Card(R.drawable.hinawaju, grid7))
-        deckField2.deck.add(Card(R.drawable.hinawaju, grid7))
-
-        val a8 = intArrayOf(0, 1, 1, 1, 1)
-        val b8 = intArrayOf(1, 1, 1, 1, 0)
-        val c8 = intArrayOf(0, 0, 1, 0, 0)
-        val d8 = intArrayOf(0, 0, 0, 0, 0)
-        val e8 = intArrayOf(0, 0, 0, 0, 0)
-        val grid8 = arrayOf(a8, b8, c8, d8, e8)
-        deckField1.deck.add(Card(R.drawable.wave, grid8))
-        deckField2.deck.add(Card(R.drawable.wave, grid8))
 
         // フロントへ更新
         deckField1.reload()

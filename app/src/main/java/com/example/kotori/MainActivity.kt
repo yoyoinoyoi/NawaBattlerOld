@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     // 実行ボタンタップ時
     fun onButtonBattle(view: View?){
-        val intent = Intent(this, BattleActivity::class.java)
+        val intent = Intent(this, LobbyActivity::class.java)
         startActivity(intent)
     }
 

@@ -3,14 +3,10 @@ package com.example.kotori
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.*
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
-import com.example.kotori.Module.condition
 import com.example.kotori.data.AllCard
 import java.io.File
-import java.util.*
 import kotlin.collections.ArrayList
 
 class SelectActivity : AppCompatActivity() {
@@ -29,7 +25,7 @@ class SelectActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.select_activity)
+        setContentView(R.layout.activity_select)
 
         val recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view)
 
