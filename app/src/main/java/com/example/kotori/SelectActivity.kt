@@ -3,6 +3,7 @@ package com.example.kotori
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.*
 import com.example.kotori.data.AllCard
@@ -28,6 +29,9 @@ class SelectActivity : AppCompatActivity() {
         setContentView(R.layout.activity_select)
 
         val recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view)
+
+        val actionBar: ActionBar? = supportActionBar
+        actionBar?.title = "カード選択"
 
         recyclerView.setHasFixedSize(true)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)

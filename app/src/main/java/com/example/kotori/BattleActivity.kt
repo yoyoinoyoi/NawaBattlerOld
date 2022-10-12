@@ -6,10 +6,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import com.example.kotori.Module.Card
 import com.example.kotori.Module.DeckField
 import com.example.kotori.Module.GridMap
-import com.example.kotori.Module.condition
+import com.example.kotori.Module.Condition
 import com.example.kotori.data.AllCard
 import java.io.File
 
@@ -38,7 +39,7 @@ class BattleActivity : AppCompatActivity() {
     // 初期化
 
     // グリッド情報
-    var gridmap_base = Array(12){ Array(10){ condition.Empty} }
+    var gridmap_base = Array(12){ Array(10){ Condition.Empty} }
     val gridmap = GridMap(gridmap_base)
     val deckField1 = DeckField()
     val deckField2 = DeckField()
@@ -48,6 +49,8 @@ class BattleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_battle)
 
+        val actionBar: ActionBar? = supportActionBar
+        actionBar?.title = "バトル!!"
 
         // 選んだデッキから生成する
 
@@ -65,9 +68,7 @@ class BattleActivity : AppCompatActivity() {
             deckField1.deck.add(AllCard[cardId])
             deckField2.deck.add(AllCard[cardId])
         }
-
-
-
+        
         // フロントへ更新
         deckField1.reload()
         deckField2.reload()
@@ -84,7 +85,7 @@ class BattleActivity : AppCompatActivity() {
         }
 
         // クリックしたボタンを座標に変換
-        val index = idtoindex(view)
+        val index = idToIndex(view)
 
         // プレビューを表示する
         if ( !( gridflag && (index[0] == selectedGridCoordinates[0]) && (index[1] == selectedGridCoordinates[1]) ) ){
@@ -96,7 +97,7 @@ class BattleActivity : AppCompatActivity() {
         }
 
         // 置ければ置く
-        if ( gridmap.canset(index, selectedCardRange, condition.Player1) ){
+        if ( gridmap.canset(index, selectedCardRange, Condition.Player1) ){
             play()
         }
     }
@@ -162,22 +163,22 @@ class BattleActivity : AppCompatActivity() {
 
     // gridmap からフロントへの更新を行う
     @SuppressLint("SetTextI18n")
-    private fun updategrid (gridmap: Array<Array<condition>>) {
+    private fun updategrid (gridmap: Array<Array<Condition>>) {
         player1Score = 0
         player2Score = 0
         val gridColumn = gridmap.size
         val gridRow = gridmap[0].size
         for (i in 0 until gridColumn) {
             for (j in 0 until gridRow) {
-                val imageButtonId = indextoid(i, j)
+                val imageButtonId = indexToId(i, j)
                 val myImage: ImageButton = findViewById (imageButtonId)
                 // println(i.toString() +j.toString() +imageButtonId)
                 // gridMap の状態によって色を更新する
-                if (gridmap[i][j] == condition.Player1){
+                if (gridmap[i][j] == Condition.Player1){
                     myImage.setBackgroundResource(R.drawable.blue)
                     player1Score++
                 }
-                else if (gridmap[i][j] == condition.Player2){
+                else if (gridmap[i][j] == Condition.Player2){
                     myImage.setBackgroundResource(R.drawable.yellow)
                     player2Score++
                 }
@@ -274,13 +275,13 @@ class BattleActivity : AppCompatActivity() {
         for (i in 0 until gridmap.gridmap.size){
             for (j in 0 until gridmap.gridmap[0].size){
 
-                val imageButtonId = indextoid(i, j)
+                val imageButtonId = indexToId(i, j)
                 val myImage: ImageButton = findViewById (imageButtonId)
 
-                if (gridmap.gridmap[i][j] == condition.Player1) {
+                if (gridmap.gridmap[i][j] == Condition.Player1) {
                     myImage.setBackgroundResource(R.drawable.blue)
                     player1Score++
-                } else if (gridmap.gridmap[i][j] == condition.Player2) {
+                } else if (gridmap.gridmap[i][j] == Condition.Player2) {
                     myImage.setBackgroundResource(R.drawable.yellow)
                     player2Score++
                 } else {
@@ -290,11 +291,11 @@ class BattleActivity : AppCompatActivity() {
         }
         for ((i, j) in putCoordinates){
 
-            val imageButtonId = indextoid(i, j)
+            val imageButtonId = indexToId(i, j)
             val myImage: ImageButton = findViewById (imageButtonId)
 
             // 置けるのであれば水色
-            if (gridmap.gridmap[i][j] == condition.Empty){
+            if (gridmap.gridmap[i][j] == Condition.Empty){
                 myImage.setBackgroundResource(R.drawable.tentative_blue)
             }
             //置けないなら灰色
@@ -307,7 +308,7 @@ class BattleActivity : AppCompatActivity() {
     }
 
     // コンピュータが実行するとき
-    private fun computerTurn(): Triple<IntArray, Array<IntArray>, condition>{
+    private fun computerTurn(): Triple<IntArray, Array<IntArray>, Condition>{
         // deck はdeckField2 を用いる
 
         // 手札からまずカードを決める
@@ -326,19 +327,19 @@ class BattleActivity : AppCompatActivity() {
             val ranges = mutableListOf<Array<IntArray>>()
             for (i in 0 until gridmap.gridmap.size){
                 for (j in 0 until gridmap.gridmap[0].size){
-                    if (gridmap.canset(intArrayOf(i, j), choiceRange1, condition.Player2)){
+                    if (gridmap.canset(intArrayOf(i, j), choiceRange1, Condition.Player2)){
                         candidates.add(intArrayOf(i, j))
                         ranges.add(choiceRange1)
                     }
-                    if (gridmap.canset(intArrayOf(i, j), choiceRange2, condition.Player2)){
+                    if (gridmap.canset(intArrayOf(i, j), choiceRange2, Condition.Player2)){
                         candidates.add(intArrayOf(i, j))
                         ranges.add(choiceRange2)
                     }
-                    if (gridmap.canset(intArrayOf(i, j), choiceRange3, condition.Player2)){
+                    if (gridmap.canset(intArrayOf(i, j), choiceRange3, Condition.Player2)){
                         candidates.add(intArrayOf(i, j))
                         ranges.add(choiceRange3)
                     }
-                    if (gridmap.canset(intArrayOf(i, j), choiceRange4, condition.Player2)){
+                    if (gridmap.canset(intArrayOf(i, j), choiceRange4, Condition.Player2)){
                         candidates.add(intArrayOf(i, j))
                         ranges.add(choiceRange4)
                     }
@@ -346,9 +347,9 @@ class BattleActivity : AppCompatActivity() {
             }
             if (candidates.isNotEmpty()){
                 val randomNum = (candidates.indices).random()
-                // gridmap.setcolor(candidates[randomNum], ranges[randomNum], condition.Player2)
+                // gridmap.setcolor(candidates[randomNum], ranges[randomNum], Condition.Player2)
                 deckField2.choice(choiceCardId)
-                return Triple(candidates[randomNum], ranges[randomNum], condition.Player2)
+                return Triple(candidates[randomNum], ranges[randomNum], Condition.Player2)
             }
         }
 
@@ -357,12 +358,12 @@ class BattleActivity : AppCompatActivity() {
             val choiceCard = deckField2.handCard[choiceCardId]
             if (choiceCard != -1){
                 deckField2.choice(choiceCardId)
-                return Triple(intArrayOf(0, 0), Array(5){ intArrayOf(0, 0, 0, 0, 0)}, condition.Player2)
+                return Triple(intArrayOf(0, 0), Array(5){ intArrayOf(0, 0, 0, 0, 0)}, Condition.Player2)
             }
         }
 
         // たぶんここまでいかない
-        return Triple(intArrayOf(0, 0), Array(5){ intArrayOf(0, 0, 0, 0, 0)}, condition.Player2)
+        return Triple(intArrayOf(0, 0), Array(5){ intArrayOf(0, 0, 0, 0, 0)}, Condition.Player2)
     }
 
     // 自分と相手のカードから盤面を更新するまでの流れ
@@ -385,10 +386,10 @@ class BattleActivity : AppCompatActivity() {
         // カードの範囲が大きい順に更新していく
         if (myRangeSize < comRangeSize){
             gridmap.setcolor(computer.first, computer.second, computer.third)
-            gridmap.setcolor(selectedGridCoordinates, selectedCardRange, condition.Player1)
+            gridmap.setcolor(selectedGridCoordinates, selectedCardRange, Condition.Player1)
         }
         else if(myRangeSize > comRangeSize){
-            gridmap.setcolor(selectedGridCoordinates, selectedCardRange, condition.Player1)
+            gridmap.setcolor(selectedGridCoordinates, selectedCardRange, Condition.Player1)
             gridmap.setcolor(computer.first, computer.second, computer.third)
         }
         else{
@@ -396,10 +397,10 @@ class BattleActivity : AppCompatActivity() {
             val rv = Math.random()
             if (100 * rv > 50){
                 gridmap.setcolor(computer.first, computer.second, computer.third)
-                gridmap.setcolor(selectedGridCoordinates, selectedCardRange, condition.Player1)
+                gridmap.setcolor(selectedGridCoordinates, selectedCardRange, Condition.Player1)
             }
             else{
-                gridmap.setcolor(selectedGridCoordinates, selectedCardRange, condition.Player1)
+                gridmap.setcolor(selectedGridCoordinates, selectedCardRange, Condition.Player1)
                 gridmap.setcolor(computer.first, computer.second, computer.third)
             }
         }

@@ -3,7 +3,7 @@ package com.example.kotori
 import android.view.View
 import com.example.kotori.R
 
-fun indextoid (x: Int, y:Int): Int {
+fun indexToId (x: Int, y:Int): Int {
     /**
      算出した座標からImageButton-idに対応させる
      */

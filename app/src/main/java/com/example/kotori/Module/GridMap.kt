@@ -1,19 +1,19 @@
 package com.example.kotori.Module
 
-class GridMap(initmap: Array<Array<condition>>) {
-    var gridmap: Array<Array<condition>>
+class GridMap(initmap: Array<Array<Condition>>) {
+    var gridmap: Array<Array<Condition>>
     init{
         this.gridmap = initmap
         val gridrow = this.gridmap[0].size
         val gridcolumn = this.gridmap.size
-        this.gridmap[gridcolumn-2][1] = condition.Player1
-        this.gridmap[1][gridrow-2] = condition.Player2
+        this.gridmap[gridcolumn-2][1] = Condition.Player1
+        this.gridmap[1][gridrow-2] = Condition.Player2
     }
 
     // 置くときに含んでないといけないマスの座標を列挙
-    private fun limitation(player: condition): MutableSet<Int>{
+    private fun limitation(player: Condition): MutableSet<Int>{
         val ret = mutableSetOf<Int>()
-        // 指定マスの上下左右斜めを確認するためのベクトル
+        // 指定マスの上下左右斜めを確認するためrのベクトル
         val vec = arrayOf<IntArray>(
             intArrayOf(1, 0),
             intArrayOf(1, 1),
@@ -36,7 +36,7 @@ class GridMap(initmap: Array<Array<condition>>) {
                     if ((vy < 0) || (vy >= this.gridmap[0].size)){
                         continue
                     }
-                    if (this.gridmap[vx][vy] !== condition.Empty){
+                    if (this.gridmap[vx][vy] !== Condition.Empty){
                         continue
                     }
 
@@ -69,7 +69,7 @@ class GridMap(initmap: Array<Array<condition>>) {
     }
 
     // 置くことができるかをboolean で返す
-    fun canset(Coordinates: IntArray, Range: Array<IntArray>, player: condition): Boolean{
+    fun canset(Coordinates: IntArray, Range: Array<IntArray>, player: Condition): Boolean{
         val candidate = this.limitation(player)
         val rangecoordinate = this.rangetocoordinate(Range)
 
@@ -107,7 +107,7 @@ class GridMap(initmap: Array<Array<condition>>) {
             }
 
             // 該当マスがすでに埋まっていたら置くことができない
-            if (this.gridmap[vx][vy] !== condition.Empty){
+            if (this.gridmap[vx][vy] !== Condition.Empty){
                 return false
             }
         }
@@ -117,7 +117,7 @@ class GridMap(initmap: Array<Array<condition>>) {
 
 
     // 実際に置く. 置けない場合でも実行されるので注意
-    fun setcolor(Coordinates: IntArray, Range: Array<IntArray>, player: condition){
+    fun setcolor(Coordinates: IntArray, Range: Array<IntArray>, player: Condition){
         val rangeCoordinate = this.rangetocoordinate(Range)
         for ((x, y) in rangeCoordinate){
             this.gridmap[x+Coordinates[0]][y+Coordinates[1]] = player

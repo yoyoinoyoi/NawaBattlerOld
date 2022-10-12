@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import androidx.appcompat.app.ActionBar
 import com.example.kotori.data.AllCard
 import java.io.*
 
@@ -19,6 +20,8 @@ class LobbyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lobby)
+        val actionBar: ActionBar? = supportActionBar
+        actionBar?.title = "ロビー"
 
     }
 

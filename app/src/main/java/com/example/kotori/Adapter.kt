@@ -36,7 +36,7 @@ class MyAdapter(private val iImages: ArrayList<Int>):
         }
     }
 
-    //インターフェースの作成
+    // インターフェースの作成
     interface OnItemClickListener{
         fun onItemClickListener(view: View, position: Int, clickedText: String)
     }
@@ -46,6 +46,6 @@ class MyAdapter(private val iImages: ArrayList<Int>):
         this.listener = listener
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    // サイズを返す関数
     override fun getItemCount() = iImages.size
 }
