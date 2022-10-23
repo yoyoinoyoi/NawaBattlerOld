@@ -1,12 +1,14 @@
-package com.example.kotori
+package com.example.kotori.method
 
 import android.view.View
 import com.example.kotori.R
 
-// ImageButton の位置から座標を返す関数
-fun idToIndex(view: View): IntArray{
+/*
+* バトルフィールド上でのクリックされた位置から座標を返す関数
+ */
+fun convertIdToCoordinate(view: View): IntArray{
 
-    val index = when(view.id){
+    val ret = when(view.id){
         R.id.P0000 -> intArrayOf(0, 0)
         R.id.P0001 -> intArrayOf(0, 1)
         R.id.P0002 -> intArrayOf(0, 2)
@@ -127,7 +129,7 @@ fun idToIndex(view: View): IntArray{
         R.id.P1107 -> intArrayOf(11, 7)
         R.id.P1108 -> intArrayOf(11, 8)
         R.id.P1109 -> intArrayOf(11, 9)
-        else -> intArrayOf(100, 100)
+        else -> intArrayOf(-1, -1)
     }
-    return index
+    return ret
 }

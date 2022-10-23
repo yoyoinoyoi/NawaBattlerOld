@@ -6,15 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBar
 import com.example.kotori.data.AllCard
+import com.example.kotori.method.convertDeckToId
+import com.example.kotori.method.convertIdToDeck
 import java.io.*
 
 class LobbyActivity : AppCompatActivity() {
 
     var clickDeck = -1
-
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,25 +22,12 @@ class LobbyActivity : AppCompatActivity() {
         setContentView(R.layout.activity_lobby)
         val actionBar: ActionBar? = supportActionBar
         actionBar?.title = "ロビー"
-
     }
 
     fun onClickDeck(view: View){
 
         // クリックしたデッキの番号を記憶しておく
-        clickDeck = when(view.id){
-            R.id.deckButton1 -> 1
-            R.id.deckButton2 -> 2
-            R.id.deckButton3 -> 3
-            R.id.deckButton4 -> 4
-            R.id.deckButton5 -> 5
-            R.id.deckButton6 -> 6
-            R.id.deckButton7 -> 7
-            R.id.deckButton8 -> 8
-            else -> -1
-        }
-
-
+        clickDeck = convertIdToDeck(view)
         val internal = applicationContext.filesDir
         val file = File(internal, "data$clickDeck")
 
@@ -50,7 +37,6 @@ class LobbyActivity : AppCompatActivity() {
             bufferedWriter.write("0\n1\n2\n3\n4\n5\n6\n7")
             bufferedWriter.close()
             println("Create Deck")
-//            bufferedWriter.use { bw -> bw.write("0\n1\n2\n3\n4\n5\n6\n7") }
         }
 
         // ファイルにかかれたカードの画像を表示する
@@ -59,12 +45,10 @@ class LobbyActivity : AppCompatActivity() {
 
         bufferedReader.readLines().forEach {
             val cardId = it.toInt()
-            val myImage: ImageButton = findViewById(indexToButton(cardIndex))
+            val myImage: ImageButton = findViewById(convertDeckToId(cardIndex))
             myImage.setBackgroundResource(AllCard[cardId].Image)
             cardIndex++
         }
-        // クリックしたデッキのカード一覧を下に表示する
-
     }
 
     fun onClickBattle(view: View){
@@ -75,21 +59,6 @@ class LobbyActivity : AppCompatActivity() {
         val intent = Intent(this, BattleActivity::class.java)
         intent.putExtra("deckId",clickDeck.toString())
         startActivity(intent)
-    }
-
-    private fun indexToButton(index: Int): Int{
-        val button = when(index) {
-            0 -> R.id.deckCard1
-            1 -> R.id.deckCard2
-            2 -> R.id.deckCard3
-            3 -> R.id.deckCard4
-            4 -> R.id.deckCard5
-            5 -> R.id.deckCard6
-            6 -> R.id.deckCard7
-            7 -> R.id.deckCard8
-            else -> R.id.deckCard1
-        }
-        return button
     }
 
 }

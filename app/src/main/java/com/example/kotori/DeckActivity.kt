@@ -6,15 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBar
 import com.example.kotori.data.AllCard
+import com.example.kotori.method.convertIdToDeck
 import java.io.*
 
 class DeckActivity : AppCompatActivity() {
 
-    var clickDeck = -1
-
+    // クリックしたデッキ番号
+    private var clickDeck = -1
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,21 +25,13 @@ class DeckActivity : AppCompatActivity() {
         actionBar?.title = "デッキ編集"
     }
 
+    /*
+    * デッキをクリックしたときに実行される関数
+     */
     fun onClickDeck(view: View){
 
         // クリックしたデッキの番号を記憶しておく
-        clickDeck = when(view.id){
-            R.id.deckButton1 -> 1
-            R.id.deckButton2 -> 2
-            R.id.deckButton3 -> 3
-            R.id.deckButton4 -> 4
-            R.id.deckButton5 -> 5
-            R.id.deckButton6 -> 6
-            R.id.deckButton7 -> 7
-            R.id.deckButton8 -> 8
-            else -> -1
-        }
-
+        clickDeck = convertIdToDeck(view)
 
         val internal = applicationContext.filesDir
         val file = File(internal, "data$clickDeck")
@@ -50,21 +42,18 @@ class DeckActivity : AppCompatActivity() {
             bufferedWriter.write("0\n1\n2\n3\n4\n5\n6\n7")
             bufferedWriter.close()
             println("Create Deck")
-//            bufferedWriter.use { bw -> bw.write("0\n1\n2\n3\n4\n5\n6\n7") }
         }
 
-        // ファイルにかかれたカードの画像を表示する
+        // ファイルにかかれたカードの画像を画面下に表示する
         val bufferedReader = file.bufferedReader()
         var cardIndex = 0
 
         bufferedReader.readLines().forEach {
             val cardId = it.toInt()
-            val myImage: ImageButton = findViewById(indexToButton(cardIndex))
+            val myImage: ImageButton = findViewById(convertDeckToId(cardIndex))
             myImage.setBackgroundResource(AllCard[cardId].Image)
             cardIndex++
         }
-        // クリックしたデッキのカード一覧を下に表示する
-
     }
 
     fun onClickEdit(view: View){
@@ -78,10 +67,10 @@ class DeckActivity : AppCompatActivity() {
     }
 
     fun onClickRename(view: View){
-
+        return
     }
 
-    private fun indexToButton(index: Int): Int{
+    private fun convertDeckToId(index: Int): Int{
         val button = when(index) {
             0 -> R.id.deckCard1
             1 -> R.id.deckCard2

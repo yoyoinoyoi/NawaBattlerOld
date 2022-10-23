@@ -1,16 +1,15 @@
-package com.example.kotori
+package com.example.kotori.method
 
 import android.view.View
 import com.example.kotori.R
 
-fun indexToId (x: Int, y:Int): Int {
-    /**
-     算出した座標からImageButton-idに対応させる
-     */
-
+/*
+ 算出した座標からImageButton-idに対応させる
+ */
+fun convertCoordinateToId (x: Int, y:Int): Int {
     // 100 > arrSize
     val index = 100 * x +y
-    val ider = when(index){
+    val ret = when(index){
         0 -> R.id.P0000
         1 -> R.id.P0001
         2 -> R.id.P0002
@@ -133,5 +132,5 @@ fun indexToId (x: Int, y:Int): Int {
         1109 -> R.id.P1109
         else -> R.id.cardbutton3
     }
-    return  ider
+    return  ret
 }

@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.*
 import com.example.kotori.data.AllCard
+import com.example.kotori.method.convertDeckToId
 import java.io.File
 import kotlin.collections.ArrayList
 
@@ -16,10 +17,13 @@ class SelectActivity : AppCompatActivity() {
     var deckId = ""
 
     // 暫定のデッキ内容
-    val cmpDeck: ArrayList<Int> = arrayListOf()
+    private val cmpDeck: ArrayList<Int> = arrayListOf()
 
     // 選択されたカード
     var selectedCard = -1
+
+    // 選択されたカードのview 情報
+    var selectedCardView = -1
 
     // カード選択フラグ
     var cardFlag = false
@@ -42,8 +46,8 @@ class SelectActivity : AppCompatActivity() {
         )
 
         val images: ArrayList<Int> = arrayListOf()
-        for (i in 0 until AllCard.size) {
-            images.add(AllCard[i].Image)
+        for (element in AllCard) {
+            images.add(element.Image)
         }
 
         val adapter = MyAdapter(images)
@@ -62,7 +66,7 @@ class SelectActivity : AppCompatActivity() {
 
         bufferedReader.readLines().forEach {
             val cardId = it.toInt()
-            val myImage: ImageButton = findViewById(indexToButton(cardIndex))
+            val myImage: ImageButton = findViewById(convertDeckToId(cardIndex))
             myImage.setBackgroundResource(AllCard[cardId].Image)
             cmpDeck.add(cardId)
             cardIndex++
@@ -74,9 +78,20 @@ class SelectActivity : AppCompatActivity() {
         adapter.setOnItemClickListener(object : MyAdapter.OnItemClickListener {
             override fun onItemClickListener(view: View, position: Int, clickedText: String) {
                 println(position.toString())
-                println(view.toString())
-                println(clickedText.toString())
+                println(selectedCardView)
+
+                // position を使えばクリックしたカードが別のカードになっても
+                // 問題ない
+
+                val afterImage: ImageButton = findViewById (view.id)
+                afterImage.setColorFilter(R.color.black)
+                afterImage.setBackgroundResource(R.drawable.gray)
+
                 selectedCard = position
+                selectedCardView = view.id
+
+                println(selectedCardView)
+
                 cardFlag = true
             }
         })
@@ -102,37 +117,8 @@ class SelectActivity : AppCompatActivity() {
         if (!cardFlag) {
             return
         }
-        val clickCardId = buttonToIndex(view)
-        cmpDeck[clickCardId] = selectedCard
-        cardFlag = false
-        updateDeck()
-        return
-    }
 
-    private fun updateDeck() {
-        for (i in 0 until cmpDeck.size) {
-            val myImage: ImageButton = findViewById(indexToButton(i))
-            myImage.setBackgroundResource(AllCard[cmpDeck[i]].Image)
-        }
-    }
-
-    private fun indexToButton(index: Int): Int {
-        val button = when (index) {
-            0 -> R.id.deckCard1
-            1 -> R.id.deckCard2
-            2 -> R.id.deckCard3
-            3 -> R.id.deckCard4
-            4 -> R.id.deckCard5
-            5 -> R.id.deckCard6
-            6 -> R.id.deckCard7
-            7 -> R.id.deckCard8
-            else -> R.id.deckCard1
-        }
-        return button
-    }
-
-    private fun buttonToIndex(view: View): Int {
-        val index = when (view.id) {
+        val clickCardId= when(view.id){
             R.id.deckCard1 -> 0
             R.id.deckCard2 -> 1
             R.id.deckCard3 -> 2
@@ -143,6 +129,18 @@ class SelectActivity : AppCompatActivity() {
             R.id.deckCard8 -> 7
             else -> -1
         }
-        return index
+
+        cmpDeck[clickCardId] = selectedCard
+        cardFlag = false
+        updateDeck()
+        return
     }
+
+    private fun updateDeck() {
+        for (i in 0 until cmpDeck.size) {
+            val myImage: ImageButton = findViewById(convertDeckToId(i))
+            myImage.setBackgroundResource(AllCard[cmpDeck[i]].Image)
+        }
+    }
+
 }

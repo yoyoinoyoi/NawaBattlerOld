@@ -1,4 +1,4 @@
-package com.example.kotori.Module
+package com.example.kotori.structure
 
 // カードの情報
 data class Card(val Image: Int, val Range: Array<IntArray>){

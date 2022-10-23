@@ -1,4 +1,4 @@
-package com.example.kotori.Module
+package com.example.kotori.structure
 
 enum class Condition {
     Empty,

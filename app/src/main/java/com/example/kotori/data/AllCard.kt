@@ -1,6 +1,6 @@
 package com.example.kotori.data
 
-import com.example.kotori.Module.Card
+import com.example.kotori.structure.Card
 import com.example.kotori.R
 
 // 全てのカードの効果と画像が入っている(どこからでもアクセス可能)
