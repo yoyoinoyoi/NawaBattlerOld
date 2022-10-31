@@ -173,8 +173,6 @@ class BattleActivity : AppCompatActivity() {
 
     /* 以下、プライベート関数 */
 
-    // Turn x / N: PlayerName として更新する
-
     // fieldMain からフロントへの更新を行う
     @SuppressLint("SetTextI18n")
     private fun updateField (field: Array<Array<Condition>>) {
@@ -202,33 +200,27 @@ class BattleActivity : AppCompatActivity() {
         // スコア更新
         val turnText: TextView = findViewById (R.id.Turn)
 
-        turnText.text = "Turn $nowTurnCount / $totalTurn : " +
-                "Card ${deck1.stackCard.size + deck1.handCard.size} / ${deck1.deck.size}"
-        val p1Text: TextView = findViewById (R.id.player1)
-        p1Text.text = "$player1Score"
-        val p2Text: TextView = findViewById (R.id.player2)
-        p2Text.text = "$player2Score"
+        val scoreText: TextView = findViewById (R.id.score)
+        scoreText.text = "$player1Score vs $player2Score"
 
+        // 通常のTurn の更新
+        if (nowTurnCount < totalTurn){
+            turnText.text = "Turn $nowTurnCount / $totalTurn"
+        }
         // ゲーム終了なら
-        val result1Text: TextView = findViewById (R.id.player1result)
-        val result2Text: TextView = findViewById (R.id.player2result)
-
-        if (nowTurnCount > totalTurn){
-            // Turn表示ではなくGameSet と表示する
-            turnText.text = "GameSet!" +
-                    "Card ${deck1.stackCard.size + deck1.handCard.size} / ${deck1.deck.size}"
+        else if (nowTurnCount > totalTurn){
             if (player1Score > player2Score){
-                result1Text.text = "WIN!!"
-                result2Text.text = "LOSE..."
+                turnText.text = "WIN!!"
             }
             else if (player1Score < player2Score){
-                result1Text.text = "LOSE..."
-                result2Text.text = "WIN!!"
+                turnText.text = "LOSE..."
             }
             else{
-                result1Text.text = "DRAW"
-                result2Text.text = "DRAW"
+                turnText.text = "DRAW"
             }
+        }
+        else{
+            turnText.text = "Final Turn!"
         }
         nowTurnCount++
     }

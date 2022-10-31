@@ -869,41 +869,38 @@
         android:text="@string/Turn"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/player1result"
+        android:id="@+id/You"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="60dp"
-        android:text=""
+        android:text="You :"
         android:textSize="35sp"
-        app:layout_constraintEnd_toStartOf="@+id/versus"
-        app:layout_constraintHorizontal_bias="0.24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/player1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/playerColor"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp"
-        android:text="@string/initscore"
-        android:textSize="35sp"
-        app:layout_constraintEnd_toStartOf="@+id/versus"
-        app:layout_constraintHorizontal_bias="0.874"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/blue"
+        app:layout_constraintStart_toEndOf="@+id/You"
+        app:layout_constraintTop_toBottomOf="@+id/Turn"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/versus"
+        android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -911,34 +908,8 @@
         android:text="@string/versus"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/playerColor"
         app:layout_constraintTop_toBottomOf="@+id/Turn"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/player2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="224dp"
-        android:layout_marginTop="60dp"
-        android:text="@string/initscore"
-        android:textSize="35sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/player2result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="284dp"
-        android:layout_marginTop="60dp"
-        android:text=""
-        android:textSize="35sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
