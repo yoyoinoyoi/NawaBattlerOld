@@ -33,7 +33,9 @@ class DeckActivity : AppCompatActivity() {
     // 戻るボタンをクリックしたときの処理
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            finish()
+            // デッキ編集画面に戻る
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }

@@ -1,6 +1,7 @@
 package com.example.kotori
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -85,7 +86,9 @@ class BattleActivity : AppCompatActivity() {
     // 戻るボタンをクリックしたときの処理
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            finish()
+            // デッキ編集画面に戻る
+            val intent = Intent(this, LobbyActivity::class.java)
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }

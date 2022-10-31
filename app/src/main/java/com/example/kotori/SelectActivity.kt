@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.alpha
 import androidx.recyclerview.widget.*
 import com.example.kotori.data.AllCard
 import java.io.File
@@ -79,7 +81,7 @@ class SelectActivity : AppCompatActivity() {
 
         updateDeck()
 
-        // クリックしたときに実行する関数
+        // 上の画面のカードをクリックしたときに実行する関数
         adapter.setOnItemClickListener(object : MyAdapter.OnItemClickListener {
             override fun onItemClickListener(view: View, position: Int, clickedText: String) {
                 println(position.toString())
@@ -87,12 +89,15 @@ class SelectActivity : AppCompatActivity() {
 
 //                val afterImage: ImageButton = findViewById (view.id)
 //                afterImage.setColorFilter(R.color.black)
-//                afterImage.setBackgroundResource(R.drawable.gray)
+//                afterImage.setBackgroundResource(R.drawable.gray.alpha)
 
                 selectedCard = position
                 selectedCardView = view.id
 
                 println(selectedCardView)
+
+                val myImage: ImageView = findViewById(R.id.selectCardImage)
+                myImage.setBackgroundResource(AllCard[selectedCard].Image)
 
                 cardFlag = true
             }
@@ -102,7 +107,9 @@ class SelectActivity : AppCompatActivity() {
     // 戻るボタンをクリックしたときの処理
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            finish()
+            // デッキ編集画面に戻る
+            val intent = Intent(this, DeckActivity::class.java)
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -147,6 +154,10 @@ class SelectActivity : AppCompatActivity() {
         cmpDeck[clickCardId] = selectedCard
         cardFlag = false
         updateDeck()
+
+        val myImage: ImageView = findViewById(R.id.selectCardImage)
+        myImage.setBackgroundResource(R.drawable.empty)
+
         return
     }
 
