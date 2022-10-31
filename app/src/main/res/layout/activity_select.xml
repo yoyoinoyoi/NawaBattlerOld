@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,23 +12,47 @@
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="260dp"
+        android:layout_marginBottom="326dp"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@id/OKButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/selectCardText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:ignore="UnknownId" />
 
     <Button
         android:id="@+id/OKButton"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:onClick="onClickOK"
         android:text="@string/OK"
         app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/selectText"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginBottom="16dp"
+        android:text="select:"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/OKButton"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/selectCardImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/OKButton"
+        app:layout_constraintStart_toEndOf="@+id/selectText"
+        android:background="@drawable/empty"
+        tools:ignore="MissingConstraints" />
 
     <GridLayout
         android:id="@+id/gridLayout"
@@ -76,7 +99,7 @@
             android:layout_width="95dp"
             android:layout_height="95dp"
             android:background="@drawable/empty"
-            android:onClick="onClickSelect"/>
+            android:onClick="onClickSelect" />
 
         <ImageButton
             android:id="@+id/deckCard6"
