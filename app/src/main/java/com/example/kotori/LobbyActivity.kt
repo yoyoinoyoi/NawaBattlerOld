@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.app.ActionBar
@@ -20,8 +21,21 @@ class LobbyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lobby)
+
+        // 上に表示するやつ
         val actionBar: ActionBar? = supportActionBar
         actionBar?.title = "ロビー"
+
+        // 戻るボタンをつけるためのもの
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    // 戻るボタンをクリックしたときの処理
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun onClickDeck(view: View){

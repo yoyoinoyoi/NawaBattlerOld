@@ -3,6 +3,7 @@ package com.example.kotori
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
@@ -50,8 +51,12 @@ class BattleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_battle)
 
+        // 上に表示するやつ
         val actionBar: ActionBar? = supportActionBar
         actionBar?.title = "バトル!!"
+
+        // 戻るボタンをつけるためのもの
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // 選んだデッキから生成する
 
@@ -75,6 +80,14 @@ class BattleActivity : AppCompatActivity() {
         deck2.deckSetUp()
         updateField(fieldMain.field)
         setCard(deck1.deckImageList())
+    }
+
+    // 戻るボタンをクリックしたときの処理
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     // グリッドをクリックしたときに実行される関数

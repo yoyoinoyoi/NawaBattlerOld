@@ -1,13 +1,14 @@
 package com.example.kotori
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.*
 import com.example.kotori.data.AllCard
-import com.example.kotori.method.convertDeckToId
 import java.io.File
 import kotlin.collections.ArrayList
 
@@ -34,8 +35,12 @@ class SelectActivity : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view)
 
+        // 上に表示するやつ
         val actionBar: ActionBar? = supportActionBar
         actionBar?.title = "カード選択"
+
+        // 戻るボタンをつけるためのもの
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         recyclerView.setHasFixedSize(true)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
@@ -80,12 +85,9 @@ class SelectActivity : AppCompatActivity() {
                 println(position.toString())
                 println(selectedCardView)
 
-                // position を使えばクリックしたカードが別のカードになっても
-                // 問題ない
-
-                val afterImage: ImageButton = findViewById (view.id)
-                afterImage.setColorFilter(R.color.black)
-                afterImage.setBackgroundResource(R.drawable.gray)
+//                val afterImage: ImageButton = findViewById (view.id)
+//                afterImage.setColorFilter(R.color.black)
+//                afterImage.setBackgroundResource(R.drawable.gray)
 
                 selectedCard = position
                 selectedCardView = view.id
@@ -95,6 +97,14 @@ class SelectActivity : AppCompatActivity() {
                 cardFlag = true
             }
         })
+    }
+
+    // 戻るボタンをクリックしたときの処理
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     // 変更を確定
@@ -110,6 +120,10 @@ class SelectActivity : AppCompatActivity() {
             bufferedWriter.newLine()
         }
         bufferedWriter.close()
+
+        // デッキ編集画面に戻る
+        val intent = Intent(this, DeckActivity::class.java)
+        startActivity(intent)
     }
 
     // 画面下のカードをクリックしたときに実行される関数
@@ -142,5 +156,19 @@ class SelectActivity : AppCompatActivity() {
             myImage.setBackgroundResource(AllCard[cmpDeck[i]].Image)
         }
     }
+}
 
+private fun convertDeckToId(deck: Int): Int {
+    val ret = when (deck) {
+        0 -> R.id.deckCard1
+        1 -> R.id.deckCard2
+        2 -> R.id.deckCard3
+        3 -> R.id.deckCard4
+        4 -> R.id.deckCard5
+        5 -> R.id.deckCard6
+        6 -> R.id.deckCard7
+        7 -> R.id.deckCard8
+        else -> R.id.deckCard1
+    }
+    return ret
 }
