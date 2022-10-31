@@ -152,7 +152,7 @@ class BattleActivity : AppCompatActivity() {
     }
 
     // 回転ボタンをクリックしたときに実行される関数
-    fun onClickRotate(){
+    fun onClickRotate(view: View){
         // カードが選択されなければ実行しない
         if (!cardFlag) {
             return
@@ -162,7 +162,7 @@ class BattleActivity : AppCompatActivity() {
     }
 
     // パスボタンをクリックしたときに実行される関数
-    fun onClickPass(){
+    fun onClickPass(view: View){
         if (!cardFlag) {
             return
         }
@@ -214,7 +214,7 @@ class BattleActivity : AppCompatActivity() {
         val result2Text: TextView = findViewById (R.id.player2result)
 
         if (nowTurnCount > totalTurn){
-            // Turn表示ではなくGameset と表示する
+            // Turn表示ではなくGameSet と表示する
             turnText.text = "GameSet!" +
                     "Card ${deck1.stackCard.size + deck1.handCard.size} / ${deck1.deck.size}"
             if (player1Score > player2Score){
@@ -259,34 +259,8 @@ class BattleActivity : AppCompatActivity() {
 
     // プレビューを表示する
     private fun preview(){
-        // カードの範囲から座標にまず変換する
-        val putCoordinates = mutableListOf<IntArray>()
-        for (i in selectCardRange.indices){
-            for (j in 0 until selectCardRange[0].size){
-                if (selectCardRange[i][j] == 1){
-
-                    val x = selectGridCoordinates[0] + (i -2)
-                    val y = selectGridCoordinates[1] + (j -2)
-                    // 範囲外なら何もしない
-                    if ((x < 0) || (x >= fieldMain.field.size)){
-                        continue
-                    }
-                    if ((y < 0) || (y >= fieldMain.field[0].size)){
-                        continue
-                    }
-
-                    putCoordinates.add(intArrayOf(x, y))
-                }
-            }
-        }
-
-        for ((x, y) in putCoordinates){
-            println(x.toString() + y.toString())
-        }
-
         for (i in 0 until fieldMain.field.size){
             for (j in 0 until fieldMain.field[0].size){
-
                 val imageButtonId = convertCoordinateToId(i, j)
                 val myImage: ImageButton = findViewById (imageButtonId)
 
@@ -301,23 +275,54 @@ class BattleActivity : AppCompatActivity() {
                 }
             }
         }
-        for ((i, j) in putCoordinates){
 
-            val imageButtonId = convertCoordinateToId(i, j)
-            val myImage: ImageButton = findViewById (imageButtonId)
+        // 中央部をまず表示(中央部がかぶっている処理は後ろで行う)
+        val coreImage: ImageButton = findViewById (convertCoordinateToId(selectGridCoordinates[0], selectGridCoordinates[1]))
+        coreImage.setBackgroundResource(R.drawable.tentative_core)
 
-            // 置けるのであれば水色
-            if (fieldMain.field[i][j] == Condition.Empty){
-                myImage.setBackgroundResource(R.drawable.tentative_blue)
+        // カードの範囲から座標にまず変換する
+        for (i in selectCardRange.indices){
+            for (j in 0 until selectCardRange[0].size){
+                if (selectCardRange[i][j] == 1){
+
+                    val x = selectGridCoordinates[0] + (i -2)
+                    val y = selectGridCoordinates[1] + (j -2)
+                    // 範囲外なら何もしない
+                    if ((x < 0) || (x >= fieldMain.field.size)){
+                        continue
+                    }
+                    if ((y < 0) || (y >= fieldMain.field[0].size)){
+                        continue
+                    }
+
+                    val imageButtonId = convertCoordinateToId(x, y)
+                    val myImage: ImageButton = findViewById (imageButtonId)
+
+                    if ((i == 2) && (j == 2)){
+                        if (fieldMain.field[x][y] == Condition.Empty){
+                            myImage.setBackgroundResource(R.drawable.tentative_blue_core)
+                        }
+                        //置けないなら灰色
+                        else{
+                            myImage.setBackgroundResource(R.drawable.tentative_gray_core)
+                        }
+                    }
+                    else{
+
+                        // 置けるのであれば水色
+                        if (fieldMain.field[x][y] == Condition.Empty) {
+                            myImage.setBackgroundResource(R.drawable.tentative_blue)
+                        }
+                        //置けないなら灰色
+                        else {
+                            myImage.setBackgroundResource(R.drawable.tentative_gray)
+                        }
+                    }
+                }
             }
-            //置けないなら灰色
-            else{
-                myImage.setBackgroundResource(R.drawable.tentative_gray)
-            }
-
         }
-
     }
+
 
     // コンピュータが実行するとき
     private fun computerTurn(): Triple<IntArray, Array<IntArray>, Condition>{
