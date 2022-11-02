@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".BattleActivity">
 
     <GridLayout
@@ -867,6 +868,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
         android:text="@string/Turn"
+        android:textColor="@color/white"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -882,6 +884,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="60dp"
         android:text="You :"
+        android:textColor="@color/white"
         android:textSize="35sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout2"
@@ -906,6 +909,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="4dp"
         android:text="@string/versus"
+        android:textColor="@color/white"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/playerColor"

@@ -11,4 +11,5 @@
     <color name="yellow">#FFEB3B</color>
     <color name="gray">#B0D1CDCD</color>
     <color name="skeleton">#FFFFFF</color>
+    <color name="background">#DA090C3C</color>
 </resources>

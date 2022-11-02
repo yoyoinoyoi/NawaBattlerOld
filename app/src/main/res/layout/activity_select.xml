@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".SelectActivity">
 
     <!-- A RecyclerView with some commonly used attributes -->
@@ -38,6 +39,7 @@
         android:layout_marginStart="84dp"
         android:layout_marginBottom="16dp"
         android:text="select:"
+        android:textColor="@color/white"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/OKButton"
         app:layout_constraintStart_toStartOf="parent"
