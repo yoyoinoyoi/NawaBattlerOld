@@ -8,15 +8,14 @@
     android:orientation="vertical"
     android:layout_gravity="center_vertical"
     android:background="@color/background"
-    tools:context=".MainActivity" >
+    tools:context=".MainFragment" >
 
     <Button
-        android:id="@+id/btnBattle"
+        android:id="@+id/buttonGoToBattle"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="292dp"
-        android:onClick="onButtonBattle"
         android:text="@string/gotobattle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -24,16 +23,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnSub"
+        android:id="@+id/buttonGoToDeck"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:onClick="onButtonSub"
         android:text="@string/gotodeck"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnBattle" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonGoToBattle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

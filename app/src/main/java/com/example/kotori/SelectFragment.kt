@@ -8,13 +8,12 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.alpha
 import androidx.recyclerview.widget.*
 import com.example.kotori.data.AllCard
 import java.io.File
 import kotlin.collections.ArrayList
 
-class SelectActivity : AppCompatActivity() {
+class SelectFragment : AppCompatActivity() {
 
     // DeckActivity でクリックされたデッキの番号
     var deckId = ""
@@ -33,7 +32,7 @@ class SelectActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_select)
+        setContentView(R.layout.fragment_select)
 
         val recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view)
 
@@ -108,7 +107,7 @@ class SelectActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             // デッキ編集画面に戻る
-            val intent = Intent(this, DeckActivity::class.java)
+            val intent = Intent(this, DeckFragment::class.java)
             startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
@@ -129,7 +128,7 @@ class SelectActivity : AppCompatActivity() {
         bufferedWriter.close()
 
         // デッキ編集画面に戻る
-        val intent = Intent(this, DeckActivity::class.java)
+        val intent = Intent(this, DeckFragment::class.java)
         startActivity(intent)
     }
 

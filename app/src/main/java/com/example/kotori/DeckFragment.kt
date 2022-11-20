@@ -12,7 +12,7 @@ import com.example.kotori.data.AllCard
 import com.example.kotori.method.convertIdToDeck
 import java.io.*
 
-class DeckActivity : AppCompatActivity() {
+class DeckFragment : AppCompatActivity() {
 
     // クリックしたデッキ番号
     private var clickDeck = -1
@@ -20,7 +20,7 @@ class DeckActivity : AppCompatActivity() {
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_deck)
+        setContentView(R.layout.fragment_deck)
 
         // 上に表示するやつ
         val actionBar: ActionBar? = supportActionBar
@@ -34,7 +34,7 @@ class DeckActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             // デッキ編集画面に戻る
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainFragment::class.java)
             startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
@@ -76,9 +76,9 @@ class DeckActivity : AppCompatActivity() {
         if (clickDeck == -1){
             return
         }
-        val intent = Intent(this, SelectActivity::class.java)
-        intent.putExtra("deckId",clickDeck.toString())
-        startActivity(intent)
+//        val intent = Intent(this, SelectActivity::class.java)
+//        intent.putExtra("deckId",clickDeck.toString())
+//        startActivity(intent)
     }
 
     fun onClickRename(view: View){

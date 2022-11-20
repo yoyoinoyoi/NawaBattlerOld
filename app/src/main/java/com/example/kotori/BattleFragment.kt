@@ -17,7 +17,7 @@ import com.example.kotori.method.convertCoordinateToId
 import com.example.kotori.method.convertIdToCoordinate
 import java.io.File
 
-class BattleActivity : AppCompatActivity() {
+class BattleFragment : AppCompatActivity() {
 
     // 現在グリッドを操作しているか
     var fieldFlag = false
@@ -50,7 +50,7 @@ class BattleActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_battle)
+        setContentView(R.layout.fragment_battle)
 
         // 上に表示するやつ
         val actionBar: ActionBar? = supportActionBar
@@ -87,7 +87,7 @@ class BattleActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             // デッキ編集画面に戻る
-            val intent = Intent(this, LobbyActivity::class.java)
+            val intent = Intent(this, LobbyFragment::class.java)
             startActivity(intent)
         }
         return super.onOptionsItemSelected(item)

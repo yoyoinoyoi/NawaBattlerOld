@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.kotori.MainFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_lobbyFragment"
+            app:destination="@id/lobbyFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/lobbyFragment"
+        android:name="com.example.kotori.LobbyFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_lobby">
+        <action
+            android:id="@+id/action_lobbyFragment_to_battleFragment"
+            app:destination="@id/battleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/battleFragment"
+        android:name="com.example.kotori.BattleFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_battle">
+    </fragment>
+
+    <fragment
+        android:id="@+id/deckFragment"
+        android:name="com.example.kotori.DeckFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_deck">
+        <action
+            android:id="@+id/action_deckFragment_to_selectFragment"
+            app:destination="@id/selectFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectFragment"
+        android:name="com.example.kotori.SelectFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_select">
+    </fragment>
+</navigation>
