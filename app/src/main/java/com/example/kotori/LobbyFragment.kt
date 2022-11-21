@@ -20,7 +20,7 @@ class LobbyFragment : Fragment() {
     private var _binding: FragmentLobbyBinding? = null
     private val binding get() = _binding!!
 
-    private var selectDeckNumber = 0
+    private var selectDeckNumber = 1
     private var selectDeckFlag = false
 
     @SuppressLint("SetTextI18n")
@@ -41,7 +41,8 @@ class LobbyFragment : Fragment() {
             // デッキが選択されていない場合には動作しないようにする
             // デッキの番号をFragmentBattle に渡す
             if (selectDeckFlag){
-                val action = LobbyFragmentDirections.actionLobbyFragmentToBattleFragment()
+                val action = LobbyFragmentDirections
+                    .actionLobbyFragmentToBattleFragment(selectDeckNumber.toString())
                 findNavController().navigate(action)
             }
         }

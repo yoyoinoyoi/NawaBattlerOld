@@ -4,20 +4,34 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.kotori.structure.DeckManager
 import com.example.kotori.structure.FieldManager
 import com.example.kotori.structure.Condition
 import com.example.kotori.data.AllCard
+import com.example.kotori.databinding.FragmentBattleBinding
+import com.example.kotori.databinding.FragmentLobbyBinding
 import com.example.kotori.method.convertCoordinateToId
 import com.example.kotori.method.convertIdToCoordinate
+import com.example.kotori.method.convertIdToDeck
 import java.io.File
 
-class BattleFragment : AppCompatActivity() {
+class BattleFragment : Fragment() {
+
+    private var _binding: FragmentBattleBinding? = null
+    private val binding get() = _binding!!
+
+    private val args: BattleFragmentArgs by navArgs()
 
     // 現在グリッドを操作しているか
     var fieldFlag = false
@@ -38,33 +52,24 @@ class BattleFragment : AppCompatActivity() {
     // Player2 のスコア
     var player2Score = 0
 
-
-    // 初期化
-
-    // グリッド情報
     private var fieldBase = Array(12){ Array(10){ Condition.Empty} }
     private val fieldMain = FieldManager(fieldBase)
     private val deck1 = DeckManager()
     private val deck2 = DeckManager()
 
     @SuppressLint("SetTextI18n")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_battle)
-
-        // 上に表示するやつ
-        val actionBar: ActionBar? = supportActionBar
-        actionBar?.title = "バトル!!"
-
-        // 戻るボタンをつけるためのもの
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentBattleBinding.inflate(inflater, container, false)
+        val view = binding.root
 
         // 選んだデッキから生成する
-
-        val deckId = intent.getStringExtra("deckId")!!
-
         // クリックされたデッキのカードを下に表示する
-        val internal = applicationContext.filesDir
+        val deckId = args.selectDeckNumber
+        val internal = requireContext().filesDir
         val file = File(internal, "data$deckId")
 
         // ファイルにかかれたカードの画像を表示する
@@ -75,26 +80,154 @@ class BattleFragment : AppCompatActivity() {
             deck1.deck.add(AllCard[cardId])
             deck2.deck.add(AllCard[cardId])
         }
-        
+
         // フロントへ更新
         deck1.deckSetUp()
         deck2.deckSetUp()
         updateField(fieldMain.field)
         setCard(deck1.deckImageList())
+
+        /**
+         * 各ボタンごとにクリックイベントを設定
+         */
+
+        binding.P0000.setOnClickListener{ onClickGrid(it) }
+        binding.P0001.setOnClickListener{ onClickGrid(it) }
+        binding.P0002.setOnClickListener{ onClickGrid(it) }
+        binding.P0003.setOnClickListener{ onClickGrid(it) }
+        binding.P0004.setOnClickListener{ onClickGrid(it) }
+        binding.P0005.setOnClickListener{ onClickGrid(it) }
+        binding.P0006.setOnClickListener{ onClickGrid(it) }
+        binding.P0007.setOnClickListener{ onClickGrid(it) }
+        binding.P0008.setOnClickListener{ onClickGrid(it) }
+        binding.P0009.setOnClickListener{ onClickGrid(it) }
+        binding.P0100.setOnClickListener{ onClickGrid(it) }
+        binding.P0101.setOnClickListener{ onClickGrid(it) }
+        binding.P0102.setOnClickListener{ onClickGrid(it) }
+        binding.P0103.setOnClickListener{ onClickGrid(it) }
+        binding.P0104.setOnClickListener{ onClickGrid(it) }
+        binding.P0105.setOnClickListener{ onClickGrid(it) }
+        binding.P0106.setOnClickListener{ onClickGrid(it) }
+        binding.P0107.setOnClickListener{ onClickGrid(it) }
+        binding.P0108.setOnClickListener{ onClickGrid(it) }
+        binding.P0109.setOnClickListener{ onClickGrid(it) }
+        binding.P0200.setOnClickListener{ onClickGrid(it) }
+        binding.P0201.setOnClickListener{ onClickGrid(it) }
+        binding.P0202.setOnClickListener{ onClickGrid(it) }
+        binding.P0203.setOnClickListener{ onClickGrid(it) }
+        binding.P0204.setOnClickListener{ onClickGrid(it) }
+        binding.P0205.setOnClickListener{ onClickGrid(it) }
+        binding.P0206.setOnClickListener{ onClickGrid(it) }
+        binding.P0207.setOnClickListener{ onClickGrid(it) }
+        binding.P0208.setOnClickListener{ onClickGrid(it) }
+        binding.P0209.setOnClickListener{ onClickGrid(it) }
+        binding.P0300.setOnClickListener{ onClickGrid(it) }
+        binding.P0301.setOnClickListener{ onClickGrid(it) }
+        binding.P0302.setOnClickListener{ onClickGrid(it) }
+        binding.P0303.setOnClickListener{ onClickGrid(it) }
+        binding.P0304.setOnClickListener{ onClickGrid(it) }
+        binding.P0305.setOnClickListener{ onClickGrid(it) }
+        binding.P0306.setOnClickListener{ onClickGrid(it) }
+        binding.P0307.setOnClickListener{ onClickGrid(it) }
+        binding.P0308.setOnClickListener{ onClickGrid(it) }
+        binding.P0309.setOnClickListener{ onClickGrid(it) }
+        binding.P0400.setOnClickListener{ onClickGrid(it) }
+        binding.P0401.setOnClickListener{ onClickGrid(it) }
+        binding.P0402.setOnClickListener{ onClickGrid(it) }
+        binding.P0403.setOnClickListener{ onClickGrid(it) }
+        binding.P0404.setOnClickListener{ onClickGrid(it) }
+        binding.P0405.setOnClickListener{ onClickGrid(it) }
+        binding.P0406.setOnClickListener{ onClickGrid(it) }
+        binding.P0407.setOnClickListener{ onClickGrid(it) }
+        binding.P0408.setOnClickListener{ onClickGrid(it) }
+        binding.P0409.setOnClickListener{ onClickGrid(it) }
+        binding.P0500.setOnClickListener{ onClickGrid(it) }
+        binding.P0501.setOnClickListener{ onClickGrid(it) }
+        binding.P0502.setOnClickListener{ onClickGrid(it) }
+        binding.P0503.setOnClickListener{ onClickGrid(it) }
+        binding.P0504.setOnClickListener{ onClickGrid(it) }
+        binding.P0505.setOnClickListener{ onClickGrid(it) }
+        binding.P0506.setOnClickListener{ onClickGrid(it) }
+        binding.P0507.setOnClickListener{ onClickGrid(it) }
+        binding.P0508.setOnClickListener{ onClickGrid(it) }
+        binding.P0509.setOnClickListener{ onClickGrid(it) }
+        binding.P0600.setOnClickListener{ onClickGrid(it) }
+        binding.P0601.setOnClickListener{ onClickGrid(it) }
+        binding.P0602.setOnClickListener{ onClickGrid(it) }
+        binding.P0603.setOnClickListener{ onClickGrid(it) }
+        binding.P0604.setOnClickListener{ onClickGrid(it) }
+        binding.P0605.setOnClickListener{ onClickGrid(it) }
+        binding.P0606.setOnClickListener{ onClickGrid(it) }
+        binding.P0607.setOnClickListener{ onClickGrid(it) }
+        binding.P0608.setOnClickListener{ onClickGrid(it) }
+        binding.P0609.setOnClickListener{ onClickGrid(it) }
+        binding.P0700.setOnClickListener{ onClickGrid(it) }
+        binding.P0701.setOnClickListener{ onClickGrid(it) }
+        binding.P0702.setOnClickListener{ onClickGrid(it) }
+        binding.P0703.setOnClickListener{ onClickGrid(it) }
+        binding.P0704.setOnClickListener{ onClickGrid(it) }
+        binding.P0705.setOnClickListener{ onClickGrid(it) }
+        binding.P0706.setOnClickListener{ onClickGrid(it) }
+        binding.P0707.setOnClickListener{ onClickGrid(it) }
+        binding.P0708.setOnClickListener{ onClickGrid(it) }
+        binding.P0709.setOnClickListener{ onClickGrid(it) }
+        binding.P0800.setOnClickListener{ onClickGrid(it) }
+        binding.P0801.setOnClickListener{ onClickGrid(it) }
+        binding.P0802.setOnClickListener{ onClickGrid(it) }
+        binding.P0803.setOnClickListener{ onClickGrid(it) }
+        binding.P0804.setOnClickListener{ onClickGrid(it) }
+        binding.P0805.setOnClickListener{ onClickGrid(it) }
+        binding.P0806.setOnClickListener{ onClickGrid(it) }
+        binding.P0807.setOnClickListener{ onClickGrid(it) }
+        binding.P0808.setOnClickListener{ onClickGrid(it) }
+        binding.P0809.setOnClickListener{ onClickGrid(it) }
+        binding.P0900.setOnClickListener{ onClickGrid(it) }
+        binding.P0901.setOnClickListener{ onClickGrid(it) }
+        binding.P0902.setOnClickListener{ onClickGrid(it) }
+        binding.P0903.setOnClickListener{ onClickGrid(it) }
+        binding.P0904.setOnClickListener{ onClickGrid(it) }
+        binding.P0905.setOnClickListener{ onClickGrid(it) }
+        binding.P0906.setOnClickListener{ onClickGrid(it) }
+        binding.P0907.setOnClickListener{ onClickGrid(it) }
+        binding.P0908.setOnClickListener{ onClickGrid(it) }
+        binding.P0909.setOnClickListener{ onClickGrid(it) }
+        binding.P1000.setOnClickListener{ onClickGrid(it) }
+        binding.P1001.setOnClickListener{ onClickGrid(it) }
+        binding.P1002.setOnClickListener{ onClickGrid(it) }
+        binding.P1003.setOnClickListener{ onClickGrid(it) }
+        binding.P1004.setOnClickListener{ onClickGrid(it) }
+        binding.P1005.setOnClickListener{ onClickGrid(it) }
+        binding.P1006.setOnClickListener{ onClickGrid(it) }
+        binding.P1007.setOnClickListener{ onClickGrid(it) }
+        binding.P1008.setOnClickListener{ onClickGrid(it) }
+        binding.P1009.setOnClickListener{ onClickGrid(it) }
+        binding.P1100.setOnClickListener{ onClickGrid(it) }
+        binding.P1101.setOnClickListener{ onClickGrid(it) }
+        binding.P1102.setOnClickListener{ onClickGrid(it) }
+        binding.P1103.setOnClickListener{ onClickGrid(it) }
+        binding.P1104.setOnClickListener{ onClickGrid(it) }
+        binding.P1105.setOnClickListener{ onClickGrid(it) }
+        binding.P1106.setOnClickListener{ onClickGrid(it) }
+        binding.P1107.setOnClickListener{ onClickGrid(it) }
+        binding.P1108.setOnClickListener{ onClickGrid(it) }
+        binding.P1109.setOnClickListener{ onClickGrid(it) }
+
+        binding.cardbutton1.setOnClickListener { onClickCard(it) }
+        binding.cardbutton2.setOnClickListener { onClickCard(it) }
+        binding.cardbutton3.setOnClickListener { onClickCard(it) }
+
+        binding.rotatebutton.setOnClickListener { onClickRotate(it) }
+        binding.passbutton.setOnClickListener { onClickPass(it) }
+        return view
     }
 
-    // 戻るボタンをクリックしたときの処理
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            // デッキ編集画面に戻る
-            val intent = Intent(this, LobbyFragment::class.java)
-            startActivity(intent)
-        }
-        return super.onOptionsItemSelected(item)
+    // 終わったら破棄を忘れない
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
-    // グリッドをクリックしたときに実行される関数
-    fun onClickGrid(view: View){
+    private fun onClickGrid(view: View){
 
         // カードが選択されていなければ何もしない
         if (!cardFlag){
@@ -120,7 +253,7 @@ class BattleFragment : AppCompatActivity() {
     }
 
     // 画面下のカードをクリックしたとき、その情報を引き渡す
-    fun onClickCard(view: View){
+    private fun onClickCard(view: View){
 
         // クリックしたカードの能力を取り出す
         val clickButton = when(view.id){
@@ -155,7 +288,7 @@ class BattleFragment : AppCompatActivity() {
     }
 
     // 回転ボタンをクリックしたときに実行される関数
-    fun onClickRotate(view: View){
+    private fun onClickRotate(view: View){
         // カードが選択されなければ実行しない
         if (!cardFlag) {
             return
@@ -165,7 +298,7 @@ class BattleFragment : AppCompatActivity() {
     }
 
     // パスボタンをクリックしたときに実行される関数
-    fun onClickPass(view: View){
+    private fun onClickPass(view: View){
         if (!cardFlag) {
             return
         }
@@ -174,7 +307,7 @@ class BattleFragment : AppCompatActivity() {
         play()
     }
 
-    /* 以下、プライベート関数 */
+/* 以下、プライベート関数 */
 
     // fieldMain からフロントへの更新を行う
     @SuppressLint("SetTextI18n")
@@ -184,8 +317,8 @@ class BattleFragment : AppCompatActivity() {
         for (i in field.indices) {
             for (j in 0 until field[0].size) {
                 val imageButtonId = convertCoordinateToId(i, j)
-                val myImage: ImageButton = findViewById (imageButtonId)
-                
+                val myImage: ImageButton = binding.root.findViewById (imageButtonId)
+
                 // field の状態によって色を更新する
                 if (field[i][j] == Condition.Player1){
                     myImage.setBackgroundResource(R.drawable.blue)
@@ -201,9 +334,9 @@ class BattleFragment : AppCompatActivity() {
             }
         }
         // スコア更新
-        val turnText: TextView = findViewById (R.id.Turn)
+        val turnText: TextView = binding.root.findViewById (R.id.Turn)
 
-        val scoreText: TextView = findViewById (R.id.score)
+        val scoreText: TextView = binding.root.findViewById (R.id.score)
         scoreText.text = "$player1Score vs $player2Score"
 
         // 通常のTurn の更新
@@ -231,16 +364,13 @@ class BattleFragment : AppCompatActivity() {
     // デッキからカードをランダムで選んで設置する
     private fun setCard (imageList: MutableList<Int>) {
         // 枚数が足りない場合にはwhite で対応する
-        val myImage1: ImageButton = findViewById (R.id.cardbutton1)
-        val myImage2: ImageButton = findViewById (R.id.cardbutton2)
-        val myImage3: ImageButton = findViewById (R.id.cardbutton3)
-        myImage1.setBackgroundResource(imageList[0])
-        myImage2.setBackgroundResource(imageList[1])
-        myImage3.setBackgroundResource(imageList[2])
+        binding.cardbutton1.setBackgroundResource(imageList[0])
+        binding.cardbutton2.setBackgroundResource(imageList[1])
+        binding.cardbutton3.setBackgroundResource(imageList[2])
     }
 
     // Range を右に90度だけ回転させる
-    // Range: 5x5 の配列
+// Range: 5x5 の配列
     private fun rotateRange(range: Array<IntArray>): Array<IntArray>{
         val newList = Array(5){ intArrayOf(0, 0, 0, 0, 0) }
         for (i in range.indices){
@@ -257,7 +387,7 @@ class BattleFragment : AppCompatActivity() {
         for (i in 0 until fieldMain.field.size){
             for (j in 0 until fieldMain.field[0].size){
                 val imageButtonId = convertCoordinateToId(i, j)
-                val myImage: ImageButton = findViewById (imageButtonId)
+                val myImage: ImageButton = binding.root.findViewById (imageButtonId)
 
                 if (fieldMain.field[i][j] == Condition.Player1) {
                     myImage.setBackgroundResource(R.drawable.blue)
@@ -272,7 +402,7 @@ class BattleFragment : AppCompatActivity() {
         }
 
         // 中央部をまず表示(中央部がかぶっている処理は後ろで行う)
-        val coreImage: ImageButton = findViewById (convertCoordinateToId(selectGridCoordinates[0], selectGridCoordinates[1]))
+        val coreImage: ImageButton = binding.root.findViewById (convertCoordinateToId(selectGridCoordinates[0], selectGridCoordinates[1]))
         coreImage.setBackgroundResource(R.drawable.tentative_core)
 
         // カードの範囲から座標にまず変換する
@@ -291,7 +421,7 @@ class BattleFragment : AppCompatActivity() {
                     }
 
                     val imageButtonId = convertCoordinateToId(x, y)
-                    val myImage: ImageButton = findViewById (imageButtonId)
+                    val myImage: ImageButton = binding.root.findViewById (imageButtonId)
 
                     if ((i == 2) && (j == 2)){
                         if (fieldMain.field[x][y] == Condition.Empty){
@@ -424,4 +554,5 @@ class BattleFragment : AppCompatActivity() {
         updateField(fieldMain.field)
         selectGridCoordinates = intArrayOf(6, 4)
     }
+
 }
