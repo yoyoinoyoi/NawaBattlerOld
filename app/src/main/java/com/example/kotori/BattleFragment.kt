@@ -1,29 +1,23 @@
 package com.example.kotori
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.GridLayout
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.kotori.structure.DeckManager
 import com.example.kotori.structure.FieldManager
 import com.example.kotori.structure.Condition
 import com.example.kotori.data.AllCard
 import com.example.kotori.databinding.FragmentBattleBinding
-import com.example.kotori.databinding.FragmentLobbyBinding
 import com.example.kotori.method.convertCoordinateToId
 import com.example.kotori.method.convertIdToCoordinate
-import com.example.kotori.method.convertIdToDeck
 import java.io.File
 
 class BattleFragment : Fragment() {
@@ -62,7 +56,7 @@ class BattleFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentBattleBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -216,8 +210,24 @@ class BattleFragment : Fragment() {
         binding.cardbutton2.setOnClickListener { onClickCard(it) }
         binding.cardbutton3.setOnClickListener { onClickCard(it) }
 
-        binding.rotatebutton.setOnClickListener { onClickRotate(it) }
-        binding.passbutton.setOnClickListener { onClickPass(it) }
+        binding.rotatebutton.setOnClickListener { onClickRotate() }
+        binding.passbutton.setOnClickListener { onClickPass() }
+
+//        val column = 12
+//        val row = 10
+//        for (i in 0 until column * row) {
+//            // GridLayoutを使用するので、rowとcolumnを指定
+//            val params = GridLayout.LayoutParams().also {
+//                it.rowSpec = GridLayout.spec(0)
+//                it.columnSpec = GridLayout.spec(i)
+//            }
+//            val button = Button(this).also {
+//                it.text = "No$i"
+//                it.layoutParams = params
+//            }
+//            binding.gridLayout2.addView(button)
+//            i++
+//        }
         return view
     }
 
@@ -288,7 +298,7 @@ class BattleFragment : Fragment() {
     }
 
     // 回転ボタンをクリックしたときに実行される関数
-    private fun onClickRotate(view: View){
+    private fun onClickRotate(){
         // カードが選択されなければ実行しない
         if (!cardFlag) {
             return
@@ -298,7 +308,7 @@ class BattleFragment : Fragment() {
     }
 
     // パスボタンをクリックしたときに実行される関数
-    private fun onClickPass(view: View){
+    private fun onClickPass(){
         if (!cardFlag) {
             return
         }
