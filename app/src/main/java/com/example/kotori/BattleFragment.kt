@@ -57,6 +57,7 @@ class BattleFragment : Fragment() {
         _binding = FragmentBattleBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        // まずはボタンを生成
         val column = 12
         val row = 10
         for (i in 0 until column * row) {
@@ -106,9 +107,9 @@ class BattleFragment : Fragment() {
          * 各ボタンごとにクリックイベントを設定
          */
 
-        binding.cardbutton1.setOnClickListener { onClickCard(it) }
-        binding.cardbutton2.setOnClickListener { onClickCard(it) }
-        binding.cardbutton3.setOnClickListener { onClickCard(it) }
+        binding.cardbutton1.setOnClickListener { onClickCard(0) }
+        binding.cardbutton2.setOnClickListener { onClickCard(1) }
+        binding.cardbutton3.setOnClickListener { onClickCard(2) }
 
         binding.rotatebutton.setOnClickListener { onClickRotate() }
         binding.passbutton.setOnClickListener { onClickPass() }
@@ -130,8 +131,7 @@ class BattleFragment : Fragment() {
         }
 
         // クリックしたボタンを座標に変換
-
-        val index = intArrayOf(clickIndex / 12, clickIndex % 12)
+        val index = intArrayOf(clickIndex / 10, clickIndex % 10)
 
         // プレビューを表示する
         if ( !( fieldFlag && (index[0] == selectGridCoordinates[0]) && (index[1] == selectGridCoordinates[1]) ) ){
@@ -149,15 +149,7 @@ class BattleFragment : Fragment() {
     }
 
     // 画面下のカードをクリックしたとき、その情報を引き渡す
-    private fun onClickCard(view: View){
-
-        // クリックしたカードの能力を取り出す
-        val clickButton = when(view.id){
-            R.id.cardbutton1 -> 0
-            R.id.cardbutton2 -> 1
-            R.id.cardbutton3 -> 2
-            else -> -1
-        }
+    private fun onClickCard(clickButton: Int){
 
         // カードが何もない時には何もしない
         if (deck1.handCard[clickButton] == -1){
@@ -213,35 +205,13 @@ class BattleFragment : Fragment() {
         player1Score = 0
         player2Score = 0
         val row = 10
-//        for (i in 0 until column * row) {
-//
-//            // GridLayoutを使用するので、rowとcolumnを指定
-//            val dp = resources.displayMetrics.density
-//            val params = GridLayout.LayoutParams().also {
-//                it.rowSpec = GridLayout.spec(i % row)
-//                it.columnSpec = GridLayout.spec(i / row)
-//                it.width = (40 * dp).roundToInt()
-//                it.height = (40 * dp).roundToInt()
-//            }
-//            val imageButton = ImageButton(requireContext()).also {
-//                it.layoutParams = params
-//                //
-//                when(field[fieldColumn][fieldRow]){
-//                    Condition.Player1 -> it.setBackgroundResource(R.drawable.blue)
-//                    Condition.Player2 -> it.setBackgroundResource(R.drawable.yellow)
-//                    else -> it.setBackgroundResource(R.drawable.gray)
-//                }
-//
-//            }
-//            binding.fieldGrid.addView(imageButton)
-//        }
 
         // こっちが動けばいい
         for (i in 0 until binding.fieldGrid.childCount) {
-            val fieldRow = i % row
-            val fieldColumn = i / row
+            val fieldRow = i / row
+            val fieldColumn = i % row
             val v = binding.fieldGrid.getChildAt(i)
-            when(field[fieldColumn][fieldRow]){
+            when(field[fieldRow][fieldColumn]){
                 Condition.Player1 -> {
                     v.setBackgroundResource(R.drawable.blue)
                     player1Score++
@@ -250,7 +220,9 @@ class BattleFragment : Fragment() {
                     v.setBackgroundResource(R.drawable.yellow)
                     player2Score++
                 }
-                else -> v.setBackgroundResource(R.drawable.gray)
+                else -> {
+                    v.setBackgroundResource(R.drawable.gray)
+                }
             }
         }
 
@@ -286,7 +258,7 @@ class BattleFragment : Fragment() {
     }
 
     // Range を右に90度だけ回転させる
-// Range: 5x5 の配列
+    // Range: 5x5 の配列
     private fun rotateRange(range: Array<IntArray>): Array<IntArray>{
         val newList = Array(5){ intArrayOf(0, 0, 0, 0, 0) }
         for (i in range.indices){
@@ -303,23 +275,23 @@ class BattleFragment : Fragment() {
 
         for (i in 0 until fieldMain.field.size){
             for (j in 0 until fieldMain.field[0].size) {
-                val v = binding.fieldGrid.getChildAt(i)
+                val v = binding.fieldGrid.getChildAt(10 * i +j)
                 when (fieldMain.field[i][j]) {
                     Condition.Player1 -> {
                         v.setBackgroundResource(R.drawable.blue)
-                        player1Score++
                     }
                     Condition.Player2 -> {
                         v.setBackgroundResource(R.drawable.yellow)
-                        player2Score++
                     }
-                    else -> v.setBackgroundResource(R.drawable.gray)
+                    else -> {
+                        v.setBackgroundResource(R.drawable.gray)
+                    }
                 }
             }
         }
 
         // 中央部をまず表示(中央部がかぶっている処理は後ろで行う)
-        val coreImage = binding.fieldGrid.getChildAt (12 * selectGridCoordinates[0] +selectGridCoordinates[1])
+        val coreImage = binding.fieldGrid.getChildAt (10 * selectGridCoordinates[0] +selectGridCoordinates[1])
         coreImage.setBackgroundResource(R.drawable.tentative_core)
 
         // カードの範囲から座標にまず変換する
@@ -337,7 +309,7 @@ class BattleFragment : Fragment() {
                         continue
                     }
 
-                    val myImage = binding.fieldGrid.getChildAt (12 * x + y)
+                    val myImage = binding.fieldGrid.getChildAt (10 * x + y)
 
                     if ((i == 2) && (j == 2)){
                         if (fieldMain.field[x][y] == Condition.Empty){
@@ -461,7 +433,6 @@ class BattleFragment : Fragment() {
                 fieldMain.setColor(computer.first, computer.second, computer.third)
             }
         }
-
 
         cardFlag = false
         fieldFlag = false
