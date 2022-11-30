@@ -42,53 +42,5 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints">
 
-        <ImageView
-            android:id="@+id/deckCard1"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
-        <ImageView
-            android:id="@+id/deckCard2"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
-        <ImageView
-            android:id="@+id/deckCard3"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
-        <ImageView
-            android:id="@+id/deckCard4"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
-        <ImageView
-            android:id="@+id/deckCard5"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
-        <ImageView
-            android:id="@+id/deckCard6"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
-        <ImageView
-            android:id="@+id/deckCard7"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
-        <ImageView
-            android:id="@+id/deckCard8"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
     </GridLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
