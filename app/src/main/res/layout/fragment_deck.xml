@@ -21,29 +21,27 @@
     </GridLayout>
 
     <Button
-        android:id="@+id/Edit"
+        android:id="@+id/editButton"
         android:layout_width="150dp"
         android:layout_height="70dp"
         android:layout_marginStart="28dp"
         android:layout_marginBottom="220dp"
-        android:onClick="onClickEdit"
         android:text="@string/edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/Rename"
+        android:id="@+id/renameButton"
         android:layout_width="150dp"
         android:layout_height="70dp"
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="220dp"
-        android:onClick="onClickRename"
         android:text="@string/rename"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <GridLayout
-        android:id="@+id/gridLayout"
+        android:id="@+id/cardViewGrid"
         android:layout_width="380dp"
         android:layout_height="190dp"
         android:layout_marginBottom="4dp"
@@ -53,54 +51,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints">
-
-        <ImageButton
-            android:id="@+id/deckCard1"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
-        <ImageButton
-            android:id="@+id/deckCard2"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
-        <ImageButton
-            android:id="@+id/deckCard3"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
-        <ImageButton
-            android:id="@+id/deckCard4"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
-        <ImageButton
-            android:id="@+id/deckCard5"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
-        <ImageButton
-            android:id="@+id/deckCard6"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
-        <ImageButton
-            android:id="@+id/deckCard7"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
-
-        <ImageButton
-            android:id="@+id/deckCard8"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:background="@drawable/empty" />
 
     </GridLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

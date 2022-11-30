@@ -27,6 +27,12 @@ class MainFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        // デッキ編集画面に遷移
+        binding.buttonGoToDeck.setOnClickListener {
+            val action = MainFragmentDirections.actionMainFragmentToDeckFragment()
+            findNavController().navigate(action)
+        }
+
         return view
     }
 

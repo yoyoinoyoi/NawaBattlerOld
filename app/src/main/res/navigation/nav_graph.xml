@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mainFragment_to_lobbyFragment"
             app:destination="@id/lobbyFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_deckFragment"
+            app:destination="@id/deckFragment" />
     </fragment>
 
     <fragment
@@ -50,5 +53,8 @@
         android:name="com.example.kotori.SelectFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_select">
+        <argument
+            android:name="selectDeckNumber"
+            app:argType="string" />
     </fragment>
 </navigation>
