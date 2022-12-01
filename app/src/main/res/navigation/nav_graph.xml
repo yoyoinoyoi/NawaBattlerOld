@@ -56,5 +56,8 @@
         <argument
             android:name="selectDeckNumber"
             app:argType="string" />
+        <action
+            android:id="@+id/action_selectFragment_to_deckFragment"
+            app:destination="@id/deckFragment" />
     </fragment>
 </navigation>

@@ -20,9 +20,6 @@ import kotlin.math.roundToInt
 
 class DeckFragment : Fragment() {
 
-    // クリックしたデッキ番号
-    private var clickDeck = -1
-
     private var _binding: FragmentDeckBinding? = null
     private val binding get() = _binding!!
 

@@ -1,55 +1,54 @@
 package com.example.kotori
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.MenuItem
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.GridLayout
 import android.widget.ImageButton
-import android.widget.ImageView
-import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.*
 import com.example.kotori.data.AllCard
+import com.example.kotori.databinding.FragmentSelectBinding
 import java.io.File
 import kotlin.collections.ArrayList
+import kotlin.math.roundToInt
 
-class SelectFragment : AppCompatActivity() {
-
-    // DeckActivity でクリックされたデッキの番号
-    var deckId = ""
+class SelectFragment : Fragment() {
 
     // 暫定のデッキ内容
-    private val cmpDeck: ArrayList<Int> = arrayListOf()
+    private val tmpDeck = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0)
 
-    // 選択されたカード
-    var selectedCard = -1
+    // 選択されたカードid
+    var selectAllCard = -1
 
-    // 選択されたカードのview 情報
-    var selectedCardView = -1
+    // 選択されたデッキのカード
+    var selectDeckCard = -1
 
     // カード選択フラグ
     var cardFlag = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_select)
+    private val args: SelectFragmentArgs by navArgs()
 
-        val recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view)
+    private var _binding: FragmentSelectBinding? = null
+    private val binding get() = _binding!!
 
-        // 上に表示するやつ
-        val actionBar: ActionBar? = supportActionBar
-        actionBar?.title = "カード選択"
+    @SuppressLint("SetTextI18n")
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSelectBinding.inflate(inflater, container, false)
+        val view = binding.root
 
-        // 戻るボタンをつけるためのもの
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        recyclerView.setHasFixedSize(true)
-        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = layoutManager
-
-        recyclerView.layoutManager = GridLayoutManager(
-            this, 3, RecyclerView.VERTICAL, false
-        )
+        // 1次元のリストを作成
+        val layoutManager = LinearLayoutManager(requireContext())
+        // リストに区切り線を追加
+        val dividerItemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
 
         val images: ArrayList<Int> = arrayListOf()
         for (element in AllCard) {
@@ -57,128 +56,110 @@ class SelectFragment : AppCompatActivity() {
         }
 
         val adapter = MyAdapter(images)
-        recyclerView.adapter = adapter
 
-        deckId = intent.getStringExtra("deckId")!!
-        println(deckId)
+        // バインディングに適用
+        binding.cardRecyclerView.layoutManager = layoutManager
+        binding.cardRecyclerView.addItemDecoration(dividerItemDecoration)
+        binding.cardRecyclerView.adapter = adapter
 
+        /**
+         * 各ボタンごとにクリックイベントを設定
+         */
+
+        binding.OKButton.setOnClickListener {
+            onClickOK()
+            val action = SelectFragmentDirections.actionSelectFragmentToDeckFragment()
+            findNavController().navigate(action)
+        }
+        binding.selectCardImage.setBackgroundResource(R.drawable.empty)
+
+        // 選んだデッキから生成する
         // クリックされたデッキのカードを下に表示する
-        val internal = applicationContext.filesDir
+        val deckId = args.selectDeckNumber
+        val internal = requireContext().filesDir
         val file = File(internal, "data$deckId")
 
         // ファイルにかかれたカードの画像を表示する
         val bufferedReader = file.bufferedReader()
-        var cardIndex = 0
+        var t = 0
 
         bufferedReader.readLines().forEach {
             val cardId = it.toInt()
-            val myImage: ImageButton = findViewById(convertDeckToId(cardIndex))
-            myImage.setBackgroundResource(AllCard[cardId].Image)
-            cmpDeck.add(cardId)
-            cardIndex++
+            tmpDeck[t] = cardId
+            t++
         }
 
-        updateDeck()
+        // デッキ画像の生成
+        val deckImageColumn = 2
+        val deckImageRow = 4
+        for (i in 0 until deckImageColumn * deckImageRow){
+            // GridLayoutを使用するので、rowとcolumnを指定
+            val dp = resources.displayMetrics.density
+            val params = GridLayout.LayoutParams().also {
+                it.rowSpec = GridLayout.spec(i / deckImageRow)
+                it.columnSpec = GridLayout.spec(i % deckImageRow)
+                it.width = (95 * dp).roundToInt()
+                it.height = (95 * dp).roundToInt()
+            }
+            val imageButton = ImageButton(view.context).also {
+                it.layoutParams = params
+                it.setBackgroundResource(AllCard[tmpDeck[i]].Image)
+                it.setOnClickListener { onClickDeckCard(i) }
+            }
+            binding.cardViewGrid.addView(imageButton)
+        }
 
         // 上の画面のカードをクリックしたときに実行する関数
         adapter.setOnItemClickListener(object : MyAdapter.OnItemClickListener {
             override fun onItemClickListener(view: View, position: Int, clickedText: String) {
-                println(position.toString())
-                println(selectedCardView)
-
-//                val afterImage: ImageButton = findViewById (view.id)
-//                afterImage.setColorFilter(R.color.black)
-//                afterImage.setBackgroundResource(R.drawable.gray.alpha)
-
-                selectedCard = position
-                selectedCardView = view.id
-
-                println(selectedCardView)
-
-                val myImage: ImageView = findViewById(R.id.selectCardImage)
-                myImage.setBackgroundResource(AllCard[selectedCard].Image)
-
-                cardFlag = true
+                onClickAllCard(position)
             }
         })
+        
+        return view
     }
 
-    // 戻るボタンをクリックしたときの処理
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            // デッキ編集画面に戻る
-            val intent = Intent(this, DeckFragment::class.java)
-            startActivity(intent)
-        }
-        return super.onOptionsItemSelected(item)
+    // 終わったら破棄を忘れない
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     // 変更を確定
-    fun onClickOK(view: View) {
+    private fun onClickOK() {
 
-        val internal = applicationContext.filesDir
+        val deckId = args.selectDeckNumber
+        val internal = requireContext().filesDir
         val file = File(internal, "data$deckId")
 
         val bufferedWriter = file.bufferedWriter()
-        cmpDeck.forEach(){
+        tmpDeck.forEach(){
             println(it.toString())
             bufferedWriter.write(it.toString())
             bufferedWriter.newLine()
         }
         bufferedWriter.close()
-
-        // デッキ編集画面に戻る
-        val intent = Intent(this, DeckFragment::class.java)
-        startActivity(intent)
     }
 
     // 画面下のカードをクリックしたときに実行される関数
-    fun onClickSelect(view: View) {
+    private fun onClickDeckCard(cardId : Int) {
         if (!cardFlag) {
             return
         }
 
-        val clickCardId= when(view.id){
-            R.id.deckCard1 -> 0
-            R.id.deckCard2 -> 1
-            R.id.deckCard3 -> 2
-            R.id.deckCard4 -> 3
-            R.id.deckCard5 -> 4
-            R.id.deckCard6 -> 5
-            R.id.deckCard7 -> 6
-            R.id.deckCard8 -> 7
-            else -> -1
-        }
-
-        cmpDeck[clickCardId] = selectedCard
+        val v = binding.cardViewGrid.getChildAt(cardId)
+        v.setBackgroundResource(AllCard[selectAllCard].Image)
+        binding.selectCardImage.setBackgroundResource(R.drawable.empty)
+        tmpDeck[cardId] = selectAllCard
+        selectDeckCard = cardId
         cardFlag = false
-        updateDeck()
-
-        val myImage: ImageView = findViewById(R.id.selectCardImage)
-        myImage.setBackgroundResource(R.drawable.empty)
-
         return
     }
 
-    private fun updateDeck() {
-        for (i in 0 until cmpDeck.size) {
-            val myImage: ImageButton = findViewById(convertDeckToId(i))
-            myImage.setBackgroundResource(AllCard[cmpDeck[i]].Image)
-        }
+    private fun onClickAllCard(cardId: Int) {
+        selectAllCard = cardId
+        cardFlag = true
+        binding.selectCardImage.setBackgroundResource(AllCard[selectAllCard].Image)
     }
-}
 
-private fun convertDeckToId(deck: Int): Int {
-    val ret = when (deck) {
-        0 -> R.id.deckCard1
-        1 -> R.id.deckCard2
-        2 -> R.id.deckCard3
-        3 -> R.id.deckCard4
-        4 -> R.id.deckCard5
-        5 -> R.id.deckCard6
-        6 -> R.id.deckCard7
-        7 -> R.id.deckCard8
-        else -> R.id.deckCard1
-    }
-    return ret
 }
