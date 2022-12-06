@@ -46,7 +46,7 @@ class SelectFragment : Fragment() {
         val view = binding.root
 
         // 1次元のリストを作成
-        val layoutManager = LinearLayoutManager(requireContext())
+        val layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
         // リストに区切り線を追加
         val dividerItemDecoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
 
