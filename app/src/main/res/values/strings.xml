@@ -20,4 +20,6 @@
     <string name="edit">DECK EDIT</string>
     <string name="rename">RENAME</string>
     <string name="Go">LET\'S GO!!!</string>
+    <string name="gotogallery">Gallery</string>
+    <string name="Battle">Battle!</string>
 </resources>

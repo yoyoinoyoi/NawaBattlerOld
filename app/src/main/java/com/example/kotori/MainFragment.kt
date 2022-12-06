@@ -22,13 +22,7 @@ class MainFragment : Fragment() {
         val view = binding.root
 
         // バトル準備画面に遷移
-        binding.buttonGoToBattle.setOnClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToLobbyFragment()
-            findNavController().navigate(action)
-        }
-
-        // デッキ編集画面に遷移
-        binding.buttonGoToDeck.setOnClickListener {
+        binding.battleButton.setOnClickListener {
             val action = MainFragmentDirections.actionMainFragmentToDeckFragment()
             findNavController().navigate(action)
         }

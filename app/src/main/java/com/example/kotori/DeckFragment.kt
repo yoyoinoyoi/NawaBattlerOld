@@ -35,11 +35,24 @@ class DeckFragment : Fragment() {
         _binding = FragmentDeckBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        selectDeckFlag = false
+
         /**
          * 各ボタンごとにクリックイベントを設定
          */
 
         // バトル画面への遷移
+        binding.battleButton.setOnClickListener{
+            // デッキが選択されていない場合には動作しないようにする
+            // デッキの番号をFragmentBattle に渡す
+            if (selectDeckFlag){
+                val action = DeckFragmentDirections
+                    .actionDeckFragmentToBattleFragment(selectDeckNumber.toString())
+                findNavController().navigate(action)
+            }
+        }
+
+        // デッキ編集画面への遷移
         binding.editButton.setOnClickListener{
             // デッキが選択されていない場合には動作しないようにする
             // デッキの番号をFragmentBattle に渡す
