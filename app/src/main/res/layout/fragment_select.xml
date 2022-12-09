@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/mainColor"
     tools:context=".SelectFragment">
 
     <!-- A RecyclerView with some commonly used attributes -->
@@ -16,8 +16,9 @@
         android:layout_marginBottom="326dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/selectCardText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"
         tools:ignore="UnknownId" />
 
     <Button

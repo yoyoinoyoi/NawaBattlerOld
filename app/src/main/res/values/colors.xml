@@ -12,6 +12,7 @@
     <color name="gray">#B0D1CDCD</color>
     <color name="skeleton">#FFFFFF</color>
     <color name="background">#DA090C3C</color>
+    <color name="mainColor">#2196F3</color>
     <color name="clicked_button">#F44336</color>
     <color name="not_click_button">#9C9494</color>
 </resources>

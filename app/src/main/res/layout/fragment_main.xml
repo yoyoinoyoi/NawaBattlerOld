@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center_vertical"
-    android:background="@color/background"
+    android:background="@color/mainColor"
     tools:context=".MainFragment" >
 
     <Button

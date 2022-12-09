@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.kotori.databinding.FragmentMainBinding
+import com.nanaten.customdialog.CustomDialog
 
 class MainFragment : Fragment() {
 
@@ -27,6 +28,15 @@ class MainFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        // バトル準備画面に遷移
+        binding.galleryButton.setOnClickListener {
+            CustomDialog.Builder(this)
+                .setTitle("カスタムタイトル")
+                .setMessage("カスタムメッセージ")
+                .setPositiveButton("はい") {  }
+                .build()
+                .show(childFragmentManager, CustomDialog::class.simpleName)
+        }
         return view
     }
 
@@ -35,6 +45,4 @@ class MainFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }
