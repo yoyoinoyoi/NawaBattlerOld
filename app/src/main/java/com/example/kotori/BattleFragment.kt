@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.kotori.structure.DeckManager
 import com.example.kotori.structure.FieldManager
 import com.example.kotori.structure.Condition
 import com.example.kotori.data.AllCard
 import com.example.kotori.databinding.FragmentBattleBinding
+import com.nanaten.customdialog.CustomDialog
 import java.io.File
 import kotlin.math.roundToInt
 
@@ -233,15 +235,26 @@ class BattleFragment : Fragment() {
         }
         // ゲーム終了なら
         else if (nowTurnCount > totalTurn){
-            if (player1Score > player2Score){
-                binding.Turn.text = "WIN!!"
-            }
-            else if (player1Score < player2Score){
-                binding.Turn.text = "LOSE..."
-            }
-            else{
-                binding.Turn.text = "DRAW"
-            }
+            val resultText : String =
+                if (player1Score > player2Score){
+                    "WIN!!"
+                } else if (player1Score < player2Score){
+                    "LOSE..."
+                } else{
+                    "DRAW"
+                }
+
+            // 結果をダイアログで表示
+            CustomDialog.Builder(this)
+                .setTitle(resultText)
+                .setMessage("$player1Score vs $player2Score")
+                .setPositiveButton("OK") {
+                    val action = BattleFragmentDirections.actionBattleFragmentToDeckFragment()
+                    findNavController().navigate(action)
+                }
+                .build()
+                .show(childFragmentManager, CustomDialog::class.simpleName)
+
         }
         else{
             binding.Turn.text = "Final Turn!"

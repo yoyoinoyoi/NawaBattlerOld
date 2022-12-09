@@ -13,6 +13,15 @@
         <action
             android:id="@+id/action_mainFragment_to_deckFragment"
             app:destination="@id/deckFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.example.kotori.GalleryFragment"
+        tools:layout="@layout/fragment_gallery">
     </fragment>
 
     <fragment
@@ -36,6 +45,9 @@
         <argument
             android:name="selectDeckNumber"
             app:argType="string" />
+        <action
+            android:id="@+id/action_battleFragment_to_deckFragment"
+            app:destination="@id/deckFragment" />
     </fragment>
 
     <fragment
