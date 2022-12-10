@@ -1,4 +1,4 @@
-package com.nanaten.customdialog
+package com.example.kotori
 
 import android.app.Dialog
 import android.graphics.Color
@@ -79,6 +79,9 @@ class CustomDialog : DialogFragment() {
         val dialog = Dialog(requireContext())
         // ダイアログの背景を透過にする
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // ダイアログの外をのタップ無効
+        dialog.setCanceledOnTouchOutside(false)
 
         arguments?.let {
             title = it.getString(TITLE_KEY, "")
